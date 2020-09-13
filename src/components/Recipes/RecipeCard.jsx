@@ -21,6 +21,11 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  image: {
+    width: "10rem",
+    height: "10rem",
+    objectFit: "cover",
+  },
 });
 
 export default function RecipeCard({ recipe, deleteRecipe }) {
@@ -35,6 +40,7 @@ export default function RecipeCard({ recipe, deleteRecipe }) {
           {recipe.ingredients.map(ingredient => (
             <Typography>{ingredient.name}</Typography>
           ))}
+          <img src={recipe.image} alt={recipe.name} className={classes.image} />
         </CardContent>
         <CardActions>
           <Button size="small" onClick={() => deleteRecipe(recipe.id)}>
