@@ -57,7 +57,7 @@ function Recipes(props) {
   return (
     <Grid
       container
-      justify="space-around"
+      justify="space-between"
       alignItems="center"
       direction="column"
       style={{ height: "100vh" }}
@@ -122,15 +122,15 @@ function Recipes(props) {
             </ul>
           </Grid>
         )}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => saveRecipe()}
+          disabled={!recipeName || !recipeIngredients.length > 0}
+        >
+          Enregistrer la recette
+        </Button>
       </Grid>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => saveRecipe()}
-        disabled={!recipeName || !recipeIngredients.length > 0}
-      >
-        Enregistrer la recette
-      </Button>
       <Grid item container>
         {recipes &&
           recipes.map(recipe => (

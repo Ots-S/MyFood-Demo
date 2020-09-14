@@ -18,9 +18,7 @@ const useStyles = makeStyles({
   title: {
     fontSize: 14,
   },
-  pos: {
-    marginBottom: 12,
-  },
+
   image: {
     width: "10rem",
     height: "10rem",
@@ -31,7 +29,7 @@ const useStyles = makeStyles({
 export default function RecipeCard({ recipe, deleteRecipe }) {
   const classes = useStyles();
   return (
-    <Box m={1}>
+    <Box mx={1}>
       <Card className={classes.root}>
         <CardContent>
           <Typography variant="h5" component="h2">
