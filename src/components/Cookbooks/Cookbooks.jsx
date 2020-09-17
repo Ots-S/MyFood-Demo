@@ -20,9 +20,9 @@ const useStyles = makeStyles({
 export default function Cookbooks() {
   const [name, setName] = useState("");
   const [cookbooks, setCookbooks] = useState();
-  const [errorStatus, setErrorStatus] = useState();
   const [getError, setGetError] = useState();
   const [postError, setPostError] = useState();
+  const [deleteError, setDeleteError] = useState();
   const [recipes, setRecipes] = useState([{}]);
   const classes = useStyles();
 
@@ -66,7 +66,12 @@ export default function Cookbooks() {
     axios
       .delete("/cookbooks/" + id)
       .then(() => getCookbooks())
-      .catch(error => setErrorStatus(error.response.status));
+
+      .catch(error =>
+        setDeleteError(
+          "Erreur serveur - Le livre de recette n'a pas été supprimé, veuillez réesayer plus tard"
+        )
+      );
   }
 
   function getRecipes() {
@@ -120,6 +125,7 @@ export default function Cookbooks() {
             ))
           : !getError && <CircularProgress />}
       </Grid>
+      {deleteError && <Typography align="center">{deleteError}</Typography>}
       {getError && <Typography align="center">{getError}</Typography>}
     </Grid>
   );
