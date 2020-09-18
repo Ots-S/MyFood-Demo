@@ -12,12 +12,11 @@ import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import { makeStyles } from "@material-ui/styles";
 
+/TODO: Make a textfield component for recipes and ingredients
+
 const useStyles = makeStyles({
   container: {
     marginTop: "5rem",
-  },
-  button: {
-    color: "green",
   },
 });
 
@@ -93,78 +92,74 @@ function Recipes() {
   return (
     <Grid
       container
-      justify="space-around"
-      alignItems="center"
       direction="column"
+      alignItems="center"
       className={classes.container}
     >
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid container item direction="column" alignItems="center">
-          <TextField
-            error={postError}
-            helperText={describeError(postError)}
-            style={{ width: "20rem" }}
-            label="Nom de la recette"
-            fullwidth
-            required
-            value={recipeName}
-            onChange={event => setRecipeName(event.target.value)}
-          />
-          <TextField
-            style={{ width: "20rem" }}
-            label="Photo de la recette"
-            fullwidth
-            required
-            value={image}
-            onChange={event => setImage(event.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <Box my={2}>
-            <Autocomplete
-              disableClearable
-              value={ingredient}
-              onChange={(event, newIngredient) => {
-                addIngredientToRecipe(newIngredient);
-              }}
-              id="Ajouter un ingrédient"
-              options={ingredients}
-              getOptionLabel={ingredient => ingredient.name}
-              style={{ width: "20rem" }}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label="Ajouter un ingrédient"
-                  variant="outlined"
-                  required
-                />
-              )}
-            />
-          </Box>
-        </Grid>
-        {recipeIngredients.length > 0 && (
-          <Grid item>
-            <ul>
-              {recipeIngredients.map(ingredient => (
-                <Button
-                  key={ingredient.id}
-                  onClick={() => removeIngredientFromRecipe(ingredient)}
-                >
-                  <li>{ingredient.name}</li>
-                </Button>
-              ))}
-            </ul>
-          </Grid>
-        )}
-        <Button
-          variant="contained"
-          onClick={() => saveRecipe()}
-          disabled={!recipeName || !recipeIngredients.length > 0}
-          className={classes.button}
-        >
-          Enregistrer la recette
-        </Button>
+      <Grid item xs={10}>
+        <TextField
+          error={postError}
+          helperText={describeError(postError)}
+          fullWidth
+          label="Nom de la recette"
+          required
+          value={recipeName}
+          onChange={event => setRecipeName(event.target.value)}
+        />
+        <TextField
+          label="Photo de la recette"
+          fullWidth
+          required
+          value={image}
+          onChange={event => setImage(event.target.value)}
+        />
       </Grid>
+      <Grid item>
+        <Box my={2}>
+          <Autocomplete
+            disableClearable
+            value={ingredient}
+            onChange={(event, newIngredient) => {
+              addIngredientToRecipe(newIngredient);
+            }}
+            id="Ajouter un ingrédient"
+            options={ingredients}
+            getOptionLabel={ingredient => ingredient.name}
+            style={{ width: "20rem" }}
+            renderInput={params => (
+              <TextField
+                {...params}
+                label="Ajouter un ingrédient"
+                variant="outlined"
+                required
+              />
+            )}
+          />
+        </Box>
+      </Grid>
+      {recipeIngredients.length > 0 && (
+        <Grid item>
+          <ul>
+            {recipeIngredients.map(ingredient => (
+              <Button
+                key={ingredient.id}
+                onClick={() => removeIngredientFromRecipe(ingredient)}
+              >
+                <li>{ingredient.name}</li>
+              </Button>
+            ))}
+          </ul>
+        </Grid>
+      )}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => saveRecipe()}
+        disabled={!recipeName || !recipeIngredients.length > 0}
+        className={classes.button}
+      >
+        Enregistrer la recette
+      </Button>
       <Grid item container justify="center">
         {recipes
           ? recipes.map(recipe => (
