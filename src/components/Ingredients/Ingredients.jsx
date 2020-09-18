@@ -111,9 +111,9 @@ export default function Ingredients() {
         </Button>
       </Box>
       {ingredients ? (
-        <Grid space-around container justify="center" spacing={1} item xs={11}>
+        <Grid container justify="center" spacing={1} item xs={11}>
           {ingredients.map((ingredient, i) => (
-            <Grid item xs={4} md={2}>
+            <Grid item xs={4} md={2} key={ingredient.id}>
               <IngredientCard
                 key={i}
                 ingredient={ingredient}

@@ -11,9 +11,8 @@ const useStyles = makeStyles(theme => ({
     opacity: 0.9,
   },
   content: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 20,
-    [theme.breakpoints.up("sm")]: { height: "50%" },
   },
 }));
 
@@ -32,7 +31,7 @@ export default function Home() {
         justify="center"
         alignItems="center"
         xs={8}
-        lg={4}
+        lg={2}
         className={classes.content}
       >
         <Typography color="primary" variant="h2">

@@ -8,6 +8,7 @@ import {
   CardMedia,
   CardActions,
   CardContent,
+  Tooltip,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -22,11 +23,6 @@ const useStyles = makeStyles({
     height: "5rem",
     objectFit: "cover",
   },
-  delete: {
-    "&:hover": {
-      color: "green",
-    },
-  },
 });
 
 export default function IngredientContainer({ ingredient, deleteIngredient }) {
@@ -37,18 +33,20 @@ export default function IngredientContainer({ ingredient, deleteIngredient }) {
         <CardContent>
           <Typography>{ingredient.name.toUpperCase()}</Typography>
         </CardContent>
+        <CardMedia
+          component="img"
+          src={ingredient.image}
+          className={classes.image}
+          title={ingredient.name}
+        />
+        <CardActions>
+          <Tooltip title="Supprimer l'ingrédient">
+            <Button onClick={() => deleteIngredient(ingredient.id)}>
+              <DeleteOutlineIcon />
+            </Button>
+          </Tooltip>
+        </CardActions>
       </Grid>
-      <CardMedia
-        component="img"
-        src={ingredient.image}
-        className={classes.image}
-        title={ingredient.name}
-      />
-      <CardActions>
-        <Button onClick={() => deleteIngredient(ingredient.id)}>
-          <DeleteOutlineIcon className={classes.delete} />
-        </Button>
-      </CardActions>
     </Card>
   );
 }
