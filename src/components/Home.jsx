@@ -3,7 +3,7 @@ import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import homeImage from "../assets/photo-1566385101042-1a0aa0c1268c.jpg";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   container: {
     backgroundImage: `url(${homeImage})`,
     height: "100vh",
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 20,
   },
-}));
+});
 
 export default function Home() {
   const classes = useStyles();

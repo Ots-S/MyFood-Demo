@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import DeleteConfirmationPopUp from "../DeleteConfirmationPopUp";
 
 const useStyles = makeStyles({
   ingredientContainer: {
@@ -27,6 +28,12 @@ const useStyles = makeStyles({
 
 export default function IngredientContainer({ ingredient, deleteIngredient }) {
   const classes = useStyles();
+  const [open, setOpen] = useState();
+
+  function handleOpen() {
+    setOpen(prev => !prev);
+  }
+
   return (
     <Card className={classes.ingredientContainer}>
       <Grid container justify="center">
@@ -41,12 +48,18 @@ export default function IngredientContainer({ ingredient, deleteIngredient }) {
         />
         <CardActions>
           <Tooltip title="Supprimer l'ingrédient">
-            <Button onClick={() => deleteIngredient(ingredient.id)}>
+            <Button onClick={() => setOpen(prev => !prev)}>
               <DeleteOutlineIcon />
             </Button>
           </Tooltip>
         </CardActions>
       </Grid>
+      <DeleteConfirmationPopUp
+        open={open}
+        handleOpen={handleOpen}
+        deleteIngredient={deleteIngredient}
+        item={ingredient}
+      />
     </Card>
   );
 }

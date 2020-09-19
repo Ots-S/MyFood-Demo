@@ -13,6 +13,7 @@ import {
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import PopUp from "../PopUp";
+import DeleteConfirmationPopUp from "../DeleteConfirmationPopUp";
 
 const useStyles = makeStyles({
   root: {
@@ -30,9 +31,13 @@ const useStyles = makeStyles({
 export default function RecipeCard({ recipe, deleteRecipe }) {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   function openIngredientsPopUp() {
     setOpenModal(prevState => !prevState);
+  }
+  function openDeletePopUp() {
+    setOpenDeleteModal(prevState => !prevState);
   }
 
   return (
@@ -53,7 +58,7 @@ export default function RecipeCard({ recipe, deleteRecipe }) {
           <Button color="primary" onClick={openIngredientsPopUp}>
             <FormatListBulletedIcon />
           </Button>
-          <Button color="primary" onClick={() => deleteRecipe(recipe.id)}>
+          <Button color="primary" onClick={openDeletePopUp}>
             <DeleteOutlineIcon />
           </Button>
         </CardActions>
@@ -63,6 +68,14 @@ export default function RecipeCard({ recipe, deleteRecipe }) {
           open={openModal}
           items={recipe.ingredients}
           handleOpen={openIngredientsPopUp}
+        />
+      )}
+      {openDeleteModal && (
+        <DeleteConfirmationPopUp
+          open={openDeleteModal}
+          handleOpen={openDeletePopUp}
+          item={recipe}
+          deleteElement={deleteRecipe}
         />
       )}
     </Card>

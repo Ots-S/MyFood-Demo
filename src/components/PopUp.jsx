@@ -22,7 +22,9 @@ export default function PopUp({ open, items, handleOpen }) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {items.map(item => (
-              <Typography variant="body2">{item.name}</Typography>
+              <Typography variant="body2" key={item.id}>
+                {item.name}
+              </Typography>
             ))}
           </DialogContentText>
         </DialogContent>
