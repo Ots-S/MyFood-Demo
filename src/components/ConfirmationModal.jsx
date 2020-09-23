@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Typography,
 } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 export default function ConfirmationModal({
   recipe,
@@ -19,7 +20,16 @@ export default function ConfirmationModal({
   handleOpen,
   deleteRecipeFromCookbook,
   removeIngredientFromRecipe,
+  adding,
 }) {
+  function checkIfAlreadyAdded(ingredient) {
+    if (items.indexOf(ingredient) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <Dialog
       open={open}
@@ -31,22 +41,33 @@ export default function ConfirmationModal({
         <DialogContentText id="alert-dialog-description">
           {items &&
             items.map(item => (
-              <Grid container justify="space-between" alignItems="center">
+              <Grid
+                key={item.id}
+                container
+                justify="space-between"
+                alignItems="center"
+              >
                 <Grid item>
                   <Typography variant="body2" key={item.id}>
                     {item.name}
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Button
-                    onClick={
-                      deleteRecipeFromCookbook
-                        ? () => deleteRecipeFromCookbook(cookbook.id, item.id)
-                        : () => removeIngredientFromRecipe(recipe.id, item.id)
-                    }
-                  >
-                    X
-                  </Button>
+                  {adding ? (
+                    <Button>
+                      {checkIfAlreadyAdded(item) ? "déjà" : <AddIcon />}
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={
+                        deleteRecipeFromCookbook
+                          ? () => deleteRecipeFromCookbook(cookbook.id, item.id)
+                          : () => removeIngredientFromRecipe(recipe.id, item.id)
+                      }
+                    >
+                      X
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
             ))}

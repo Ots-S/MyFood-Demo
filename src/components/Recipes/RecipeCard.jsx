@@ -33,6 +33,7 @@ export default function RecipeCard({
   deleteRecipe,
   removeIngredientFromRecipe,
   addIngredientToRecipe,
+  ingredients,
 }) {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
@@ -45,6 +46,10 @@ export default function RecipeCard({
 
   function openDeletePopUp() {
     setOpenDeleteModal(prevState => !prevState);
+  }
+
+  function openAddingIngredientModal() {
+    setOpenAddingModal(prevState => !prevState);
   }
 
   return (
@@ -67,7 +72,7 @@ export default function RecipeCard({
           />
         </CardContent>
         <CardActions>
-          <Button color="primary" onClick={addIngredientToRecipe}>
+          <Button color="primary" onClick={openAddingIngredientModal}>
             <PlaylistAddIcon />
           </Button>
           <Button color="primary" onClick={openIngredientsPopUp}>
@@ -95,6 +100,17 @@ export default function RecipeCard({
           open={openDeleteModal}
           handleOpen={openDeletePopUp}
           deleteElement={deleteRecipe}
+        />
+      )}
+      {openAddingModal && (
+        <ConfirmationModal
+          title={"Ajouter un ingrédient"}
+          open={openAddingModal}
+          items={ingredients}
+          handleOpen={openAddingIngredientModal}
+          recipe={recipe}
+          adding={true}
+          addIngredientToRecipe={addIngredientToRecipe}
         />
       )}
     </Card>

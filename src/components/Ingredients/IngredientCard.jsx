@@ -8,7 +8,6 @@ import {
   CardMedia,
   CardActions,
   CardContent,
-  Tooltip,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -60,7 +59,7 @@ export default function IngredientContainer({ ingredient, deleteIngredient }) {
         element={ingredient}
         open={open}
         handleOpen={handleOpen}
-        deleteIngredient={deleteIngredient}
+        deleteElement={deleteIngredient}
       />
     </Card>
   );

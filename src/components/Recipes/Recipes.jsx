@@ -207,6 +207,7 @@ function Recipes() {
                 deleteRecipe={deleteRecipe}
                 removeIngredientFromRecipe={removeIngredientFromRecipe}
                 addIngredientToRecipe={addIngredientToRecipe}
+                ingredients={ingredients}
               />
             </Grid>
           ))}
