@@ -23,11 +23,14 @@ export default function ConfirmationModal({
   adding,
 }) {
   function checkIfAlreadyAdded(ingredient) {
-    if (items.indexOf(ingredient) !== -1) {
-      return true;
-    } else {
-      return false;
+    let alreayPresent = false;
+    for (let i = 0; i < recipe.ingredients.length; i++) {
+      console.log(recipe.ingredients[i]);
+      if (recipe.ingredients[i].id === ingredient.id) {
+        alreayPresent = true;
+      }
     }
+    return alreayPresent;
   }
 
   return (
@@ -53,9 +56,11 @@ export default function ConfirmationModal({
                   </Typography>
                 </Grid>
                 <Grid item>
-                  {adding ? (
+                  {adding && checkIfAlreadyAdded(item) ? (
+                    <Button></Button>
+                  ) : adding && !checkIfAlreadyAdded(item) ? (
                     <Button>
-                      {checkIfAlreadyAdded(item) ? "déjà" : <AddIcon />}
+                      <AddIcon />}
                     </Button>
                   ) : (
                     <Button
