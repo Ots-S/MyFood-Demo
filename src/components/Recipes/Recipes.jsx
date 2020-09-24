@@ -200,7 +200,7 @@ function Recipes() {
       {recipes ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {recipes.map(recipe => (
-            <Grid item lg={6} sm={6} lg={6}>
+            <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
               <RecipeCard
                 key={recipe.id}
                 recipe={recipe}
