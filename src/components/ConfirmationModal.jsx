@@ -12,7 +12,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
-// TODO corriger bug ajout
+// TODO corriger bug ajout"
 
 export default function ConfirmationModal({
   recipe,
@@ -28,11 +28,11 @@ export default function ConfirmationModal({
 }) {
   function checkIfAlreadyAdded(ingredient) {
     let alreayPresent = false;
-    for (let i = 0; i < recipe.ingredients.length; i++) {
-      if (recipe.ingredients[i].id === ingredient.id) {
+    recipe.ingredients.forEach(function (ingredientInRecipe) {
+      if (ingredientInRecipe.id === ingredient.id) {
         alreayPresent = true;
       }
-    }
+    });
     return alreayPresent;
   }
 
@@ -41,11 +41,7 @@ export default function ConfirmationModal({
   }
 
   return (
-    <Dialog
-      open={open}
-      aria-labelledby="dialog-title"
-      aria-describedby="dialog-description"
-    >
+    <Dialog open={open}>
       <DialogTitle id="dialog-title">{title}</DialogTitle>
       <DialogContent>
         {items &&
