@@ -116,7 +116,7 @@ function Recipes() {
   function addIngredientToRecipe(recipeId, ingredientId) {
     axios
       .post(`/recipes/${recipeId}/ingredient/${ingredientId}`)
-      .then(getRecipes());
+      .then(getRecipes()).catch(error => console.log(error));
   }
 
   return (
@@ -213,8 +213,8 @@ function Recipes() {
           ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
-      )}
+          <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+        )}
       <Grid item>
         {getError && (
           <Typography align="center">{describeError(getError)}</Typography>

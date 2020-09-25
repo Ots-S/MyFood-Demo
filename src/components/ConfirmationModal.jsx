@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+
+// TODO corriger bug ajout
 
 export default function ConfirmationModal({
   recipe,
@@ -34,9 +36,8 @@ export default function ConfirmationModal({
     return alreayPresent;
   }
 
-  function addIngredient(item, recipe, ingredient) {
+  function addIngredient(recipe, ingredient) {
     addIngredientToRecipe(recipe, ingredient);
-    checkIfAlreadyAdded(item);
   }
 
   return (
@@ -64,7 +65,7 @@ export default function ConfirmationModal({
                 {adding ? (
                   <Button
                     disabled={checkIfAlreadyAdded(item)}
-                    onClick={() => addIngredient(item, recipe.id, item.id)}
+                    onClick={() => addIngredient(recipe.id, item.id)}
                   >
                     {checkIfAlreadyAdded(item) ? (
                       <PlaylistAddCheckIcon />
