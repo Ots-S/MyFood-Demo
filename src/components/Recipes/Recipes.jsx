@@ -55,7 +55,7 @@ function Recipes() {
 
   function removeIngredientFromRecipe(recipe, ingredient) {
     axios
-      .delete("/recipes/" + recipe + "/ingredient/" + ingredient)
+      .delete(`/recipes/${recipe}/ingredient/${ingredient}`)
       .then(() => getRecipes());
   }
 

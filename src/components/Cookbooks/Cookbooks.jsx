@@ -53,6 +53,7 @@ export default function Cookbooks() {
     axios
       .post("/cookbooks", newCookbook)
       .then(() => getCookbooks())
+      .then(() => setName(""))
       .catch(error => setPostError(error.response.status));
   }
 
@@ -60,7 +61,6 @@ export default function Cookbooks() {
     axios
       .delete("/cookbooks/" + id)
       .then(() => getCookbooks())
-
       .catch(error =>
         setDeleteError(
           "Erreur serveur - Le livre de recette n'a pas été supprimé, veuillez réesayer plus tard"
@@ -134,12 +134,11 @@ export default function Cookbooks() {
         </Button>
       </Box>
 
-      <Grid container spacing={1} item xs={11} md={10} lg={6} s>
+      <Grid container spacing={1} item xs={11} md={10} lg={6}>
         {cookbooks ? (
           cookbooks.map(cookbook => (
-            <Grid item lg={6}>
+            <Grid item lg={6} key={cookbook.id}>
               <CookbookCard
-                key={cookbook.id}
                 cookbook={cookbook}
                 deleteCookbook={deleteCookbook}
                 addRecipeToCookbook={addRecipeToCookbook}
