@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   Button,
   Dialog,
@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import { Context } from "../Context"
 
 export default function ConfirmationModal({
   recipe,
@@ -22,8 +23,9 @@ export default function ConfirmationModal({
   deleteRecipeFromCookbook,
   removeIngredientFromRecipe,
   adding,
-  addIngredientToRecipe,
 }) {
+  const { addIngredientToRecipe } = useContext(Context)
+
   function checkIfAlreadyAdded(ingredient) {
     let alreayPresent = false;
     recipe.ingredients.forEach(function (ingredientInRecipe) {
@@ -32,10 +34,6 @@ export default function ConfirmationModal({
       }
     });
     return alreayPresent;
-  }
-
-  function addIngredient(recipe, ingredient) {
-    addIngredientToRecipe(recipe, ingredient);
   }
 
   return (
@@ -59,25 +57,25 @@ export default function ConfirmationModal({
                 {adding ? (
                   <Button
                     disabled={checkIfAlreadyAdded(item)}
-                    onClick={() => addIngredient(recipe.id, item.id)}
+                    onClick={() => addIngredientToRecipe(recipe, item)}
                   >
                     {checkIfAlreadyAdded(item) ? (
                       <PlaylistAddCheckIcon />
                     ) : (
-                      <AddIcon />
-                    )}
+                        <AddIcon />
+                      )}
                   </Button>
                 ) : (
-                  <Button
-                    onClick={
-                      deleteRecipeFromCookbook
-                        ? () => deleteRecipeFromCookbook(cookbook.id, item.id)
-                        : () => removeIngredientFromRecipe(recipe.id, item.id)
-                    }
-                  >
-                    X
-                  </Button>
-                )}
+                    <Button
+                      onClick={
+                        deleteRecipeFromCookbook
+                          ? () => deleteRecipeFromCookbook(cookbook.id, item.id)
+                          : () => removeIngredientFromRecipe(recipe.id, item.id)
+                      }
+                    >
+                      X
+                    </Button>
+                  )}
               </Grid>
             </Grid>
           ))}

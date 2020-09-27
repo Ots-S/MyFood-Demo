@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogContentText,
   DialogTitle,
   Grid,
 } from "@material-ui/core";
+import { Context } from "../Context";
 
 export default function DeleteConfirmationModal({
   element,
@@ -16,9 +15,10 @@ export default function DeleteConfirmationModal({
   open,
   title,
 }) {
+  const { deleteIngredient } = useContext(Context)
   function deleteElementAndCloseModal() {
     handleOpen();
-    deleteElement(element.id);
+    deleteIngredient(element);
   }
 
   return (

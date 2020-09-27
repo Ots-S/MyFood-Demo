@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Recipes() {
-  const { getIngredients, ingredients, getRecipes, recipes, getError } = useContext(Context);
+  const { ingredients, recipes, getError } = useContext(Context);
   const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
@@ -36,11 +36,6 @@ function Recipes() {
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
   const classes = useStyles();
-
-  useEffect(() => {
-    getIngredients();
-    getRecipes();
-  }, []);
 
   function addIngredientToRecipeCreation(ingredient) {
     if (!recipeIngredients.includes(ingredient)) {
@@ -51,7 +46,6 @@ function Recipes() {
   function removeIngredientFromRecipe(recipe, ingredient) {
     axios
       .delete(`/recipes/${recipe}/ingredient/${ingredient}`)
-      .then(() => getRecipes());
   }
 
   function unselectIngredientFromRecipe(ingredient) {
@@ -70,7 +64,7 @@ function Recipes() {
       };
       axios
         .post("/recipe", recipe)
-        .then(() => getRecipes())
+
         .catch(error => setPostError(error.response.status));
       setRecipeName("");
       setImage("");
@@ -81,7 +75,7 @@ function Recipes() {
   }
 
   function deleteRecipe(id) {
-    axios.delete("/recipes/" + id).then(() => getRecipes());
+    axios.delete("/recipes/" + id)
   }
 
   function describeError(error) {
@@ -100,13 +94,6 @@ function Recipes() {
     if (extension === ".jpg" || extension === ".png") {
       return true;
     }
-  }
-
-  function addIngredientToRecipe(recipeId, ingredientId) {
-    axios
-      .post(`/recipes/${recipeId}/ingredient/${ingredientId}`)
-      .then(() => getRecipes())
-      .catch(error => console.log(error));
   }
 
   return (
@@ -192,7 +179,6 @@ function Recipes() {
                 recipe={recipe}
                 deleteRecipe={deleteRecipe}
                 removeIngredientFromRecipe={removeIngredientFromRecipe}
-                addIngredientToRecipe={addIngredientToRecipe}
                 ingredients={ingredients}
               />
             </Grid>

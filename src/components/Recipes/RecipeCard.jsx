@@ -32,7 +32,6 @@ export default function RecipeCard({
   recipe,
   deleteRecipe,
   removeIngredientFromRecipe,
-  addIngredientToRecipe,
   ingredients,
 }) {
   const classes = useStyles();
@@ -110,7 +109,6 @@ export default function RecipeCard({
           handleOpen={openAddingIngredientModal}
           recipe={recipe}
           adding={true}
-          addIngredientToRecipe={addIngredientToRecipe}
         />
       )}
     </Card>

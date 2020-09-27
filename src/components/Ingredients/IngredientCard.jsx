@@ -59,7 +59,6 @@ export default function IngredientContainer({ ingredient, deleteIngredient }) {
         element={ingredient}
         open={open}
         handleOpen={handleOpen}
-        deleteElement={deleteIngredient}
       />
     </Card>
   );

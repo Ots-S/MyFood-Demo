@@ -25,16 +25,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Ingredients() {
-  const { getIngredients, ingredients, getError } = useContext(Context)
+  const { ingredients, createIngredient, getError, idNumber, postError, setPostError } = useContext(Context)
   const [ingredient, setIngredient] = useState("");
   const [image, setImage] = useState("");
-  const [postError, setPostError] = useState(false);
   const [imageError, setImageError] = useState(false);
   const classes = useStyles();
-
-  useEffect(() => {
-    getIngredients();
-  }, []);
 
   function onChange(event) {
     setIngredient(event.target.value);
@@ -46,24 +41,15 @@ export default function Ingredients() {
 
   function saveIngredient() {
     if (isValidImageUrl(image)) {
-      const newIngredient = { name: ingredient, image: image };
-      axios
-        .post("/ingredient", newIngredient)
-        .then(() => {
-          getIngredients();
-        })
-        .catch(error => setPostError(error.response.status));
+      const newIngredient = {
+        id: idNumber + 1, name: ingredient, image: image
+      };
+      createIngredient(newIngredient)
       setIngredient("");
       setImage("");
     } else {
       setImageError(true);
     }
-  }
-
-  function deleteIngredient(id) {
-    axios.delete("/ingredient/" + id).then(() => {
-      getIngredients();
-    });
   }
 
   function isValidImageUrl(url) {
@@ -126,7 +112,6 @@ export default function Ingredients() {
             <Grid item xs={4} md={4} lg={3} key={ingredient.id}>
               <IngredientCard
                 ingredient={ingredient}
-                deleteIngredient={deleteIngredient}
               />
             </Grid>
           ))}
