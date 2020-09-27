@@ -24,7 +24,7 @@ export default function Profile(props) {
   const [recipesCount, setRecipesCount] = useState();
   const [ingredientsCount, setIngredientsCount] = useState();
   const [cookbooksCount, setCookbooksCount] = useState()
-  const [recipes, setRecipes] = useContext(Context)
+
 
 
   useEffect(() => {

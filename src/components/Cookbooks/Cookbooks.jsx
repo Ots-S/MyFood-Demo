@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
-  Grid,
-  Button,
   Box,
-  Typography,
+  Button,
   CircularProgress,
+  Grid,
+  Typography,
 } from "@material-ui/core";
 import CookbookCard from "./CookbookCard";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import ConfirmationModal from "../ConfirmationModal";
 import Input from "../Input";
+import { Context } from "../../Context"
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -22,13 +23,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Cookbooks() {
+  const { getRecipes, recipes } = useContext(Context)
   const [name, setName] = useState("");
   const [cookbooks, setCookbooks] = useState();
   const [getError, setGetError] = useState();
   const [postError, setPostError] = useState();
   const [deleteError, setDeleteError] = useState();
   const [addError, setAddError] = useState();
-  const [recipes, setRecipes] = useState([{}]);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const classes = useStyles();
 
@@ -66,10 +67,6 @@ export default function Cookbooks() {
           "Erreur serveur - Le livre de recette n'a pas été supprimé, veuillez réesayer plus tard"
         )
       );
-  }
-
-  function getRecipes() {
-    axios.get("/recipes").then(responses => setRecipes(responses.data));
   }
 
   async function addRecipeToCookbook(cookbookId, recipeId) {
@@ -148,8 +145,8 @@ export default function Cookbooks() {
             </Grid>
           ))
         ) : (
-          <Box mt={25}>{!getError && <CircularProgress />}</Box>
-        )}
+            <Box mt={25}>{!getError && <CircularProgress />}</Box>
+          )}
       </Grid>
       {deleteError && <Typography align="center">{deleteError}</Typography>}
       {getError && (

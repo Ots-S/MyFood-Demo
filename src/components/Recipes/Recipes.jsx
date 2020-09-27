@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
-  Grid,
-  TextField,
   Box,
   Button,
-  Typography,
   CircularProgress,
+  Grid,
+  TextField,
+  Typography,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import axios from "axios";
@@ -13,6 +13,7 @@ import RecipeCard from "./RecipeCard";
 import { makeStyles } from "@material-ui/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Input from "../Input";
+import { Context } from "../../Context"
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -27,11 +28,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Recipes() {
-  const [ingredients, setIngredients] = useState([]);
+  const { getIngredients, ingredients, getRecipes, recipes } = useContext(Context);
   const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
-  const [recipes, setRecipes] = useState();
   const [getError, setGetError] = useState(false);
   const [postError, setPostError] = useState(false);
   const [image, setImage] = useState("");
@@ -42,10 +42,6 @@ function Recipes() {
     getIngredients();
     getRecipes();
   }, []);
-
-  function getIngredients() {
-    axios.get("/ingredients").then(response => setIngredients(response.data));
-  }
 
   function addIngredientToRecipeCreation(ingredient) {
     if (!recipeIngredients.includes(ingredient)) {
@@ -87,13 +83,6 @@ function Recipes() {
 
   function deleteRecipe(id) {
     axios.delete("/recipes/" + id).then(() => getRecipes());
-  }
-
-  function getRecipes() {
-    axios
-      .get("/recipes")
-      .then(responses => setRecipes(responses.data))
-      .catch(error => setGetError(error.response.status));
   }
 
   function describeError(error) {
@@ -211,8 +200,8 @@ function Recipes() {
           ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
-      )}
+          <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+        )}
       <Grid item>
         {getError && (
           <Typography align="center">{describeError(getError)}</Typography>
