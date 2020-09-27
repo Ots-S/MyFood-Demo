@@ -13,7 +13,7 @@ import RecipeCard from "./RecipeCard";
 import { makeStyles } from "@material-ui/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Input from "../Input";
-import { Context } from "../../Context"
+import { Context } from "../../Context";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -28,7 +28,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Recipes() {
-  const { ingredients, recipes, getError } = useContext(Context);
+  const {
+    ingredients,
+    recipes,
+    getError,
+    idRecipeNumber,
+    createRecipe,
+  } = useContext(Context);
   const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
@@ -44,8 +50,7 @@ function Recipes() {
   }
 
   function removeIngredientFromRecipe(recipe, ingredient) {
-    axios
-      .delete(`/recipes/${recipe}/ingredient/${ingredient}`)
+    axios.delete(`/recipes/${recipe}/ingredient/${ingredient}`);
   }
 
   function unselectIngredientFromRecipe(ingredient) {
@@ -58,24 +63,18 @@ function Recipes() {
   function saveRecipe() {
     if (isValidImageUrl(image)) {
       const recipe = {
+        id: idRecipeNumber + 1,
         name: recipeName,
         ingredients: recipeIngredients,
         image: image,
       };
-      axios
-        .post("/recipe", recipe)
-
-        .catch(error => setPostError(error.response.status));
+      createRecipe(recipe);
       setRecipeName("");
       setImage("");
       setRecipeIngredients("");
     } else {
       setImageError(true);
     }
-  }
-
-  function deleteRecipe(id) {
-    axios.delete("/recipes/" + id)
   }
 
   function describeError(error) {
@@ -177,7 +176,6 @@ function Recipes() {
               <RecipeCard
                 key={recipe.id}
                 recipe={recipe}
-                deleteRecipe={deleteRecipe}
                 removeIngredientFromRecipe={removeIngredientFromRecipe}
                 ingredients={ingredients}
               />
@@ -185,15 +183,16 @@ function Recipes() {
           ))}
         </Grid>
       ) : (
-          <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
-        )}
+        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+      )}
       <Grid item>
         {getError && (
           <Box mx={2}>
-            <Typography align="center">{describeError(getError)}</Typography></Box>
+            <Typography align="center">{describeError(getError)}</Typography>
+          </Box>
         )}
       </Grid>
-    </Grid >
+    </Grid>
   );
 }
 

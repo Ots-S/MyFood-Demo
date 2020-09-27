@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -16,6 +16,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
+import { Context } from "../../Context";
 
 const useStyles = makeStyles({
   root: { width: "100%" },
@@ -25,12 +26,12 @@ export default function CookbookCard({
   cookbook,
   deleteCookbook,
   recipes,
-  addRecipeToCookbook,
   deleteRecipeFromCookbook,
 }) {
   const classes = useStyles();
   const [recipe, setRecipe] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const { addRecipeToCookbook } = useContext(Context);
 
   function openRecipesPopUp() {
     setOpenModal(prevState => !prevState);
@@ -41,7 +42,7 @@ export default function CookbookCard({
   }
 
   function addRecipCookbook() {
-    addRecipeToCookbook(cookbook.id, recipe.id);
+    addRecipeToCookbook(cookbook, recipe);
     setRecipe("");
   }
 
@@ -89,7 +90,7 @@ export default function CookbookCard({
           <Button onClick={() => openRecipesPopUp()}>
             <FormatListBulletedIcon />
           </Button>
-          <Button onClick={() => deleteCookbook(cookbook.id)}>
+          <Button onClick={() => deleteCookbook(cookbook)}>
             <DeleteOutlineIcon />
           </Button>
         </CardActions>

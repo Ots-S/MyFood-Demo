@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
-import { Context } from "../Context"
+import { Context } from "../Context";
 
 export default function ConfirmationModal({
   recipe,
@@ -24,7 +24,7 @@ export default function ConfirmationModal({
   removeIngredientFromRecipe,
   adding,
 }) {
-  const { addIngredientToRecipe } = useContext(Context)
+  const { addIngredientToRecipe } = useContext(Context);
 
   function checkIfAlreadyAdded(ingredient) {
     let alreayPresent = false;
@@ -62,20 +62,20 @@ export default function ConfirmationModal({
                     {checkIfAlreadyAdded(item) ? (
                       <PlaylistAddCheckIcon />
                     ) : (
-                        <AddIcon />
-                      )}
+                      <AddIcon />
+                    )}
                   </Button>
                 ) : (
-                    <Button
-                      onClick={
-                        deleteRecipeFromCookbook
-                          ? () => deleteRecipeFromCookbook(cookbook.id, item.id)
-                          : () => removeIngredientFromRecipe(recipe.id, item.id)
-                      }
-                    >
-                      X
-                    </Button>
-                  )}
+                  <Button
+                    onClick={
+                      deleteRecipeFromCookbook
+                        ? () => deleteRecipeFromCookbook(cookbook, item)
+                        : () => removeIngredientFromRecipe(recipe, item)
+                    }
+                  >
+                    X
+                  </Button>
+                )}
               </Grid>
             </Grid>
           ))}

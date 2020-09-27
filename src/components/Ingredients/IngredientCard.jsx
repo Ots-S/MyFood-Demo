@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -12,6 +12,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import { Context } from "../../Context"
 
 const useStyles = makeStyles({
   ingredientContainer: {
@@ -26,9 +27,10 @@ const useStyles = makeStyles({
   deleteButton: { "&:hover": { color: "teal" } },
 });
 
-export default function IngredientContainer({ ingredient, deleteIngredient }) {
+export default function IngredientContainer({ ingredient }) {
   const classes = useStyles();
   const [open, setOpen] = useState();
+  const { deleteIngredient } = useContext(Context)
 
   function handleOpen() {
     setOpen(prev => !prev);
@@ -59,6 +61,7 @@ export default function IngredientContainer({ ingredient, deleteIngredient }) {
         element={ingredient}
         open={open}
         handleOpen={handleOpen}
+        deleteElement={deleteIngredient}
       />
     </Card>
   );

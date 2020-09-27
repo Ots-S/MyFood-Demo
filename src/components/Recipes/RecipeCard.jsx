@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -15,6 +15,7 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ConfirmationModal from "../ConfirmationModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import { Context } from "../../Context"
 
 const useStyles = makeStyles({
   root: {},
@@ -30,10 +31,10 @@ const useStyles = makeStyles({
 
 export default function RecipeCard({
   recipe,
-  deleteRecipe,
   removeIngredientFromRecipe,
   ingredients,
 }) {
+  const { deleteRecipe } = useContext(Context);
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);

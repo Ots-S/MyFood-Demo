@@ -11,7 +11,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import ConfirmationModal from "../ConfirmationModal";
 import Input from "../Input";
-import { Context } from "../../Context"
+import { Context } from "../../Context";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -23,9 +23,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Cookbooks() {
-  const { getRecipes, recipes } = useContext(Context)
+  const {
+    recipes,
+    cookbooks,
+    createCookbook,
+    idCookbookNumber,
+    deleteCookbook,
+    deleteRecipeFromCookbook,
+  } = useContext(Context);
   const [name, setName] = useState("");
-  const [cookbooks, setCookbooks] = useState();
   const [getError, setGetError] = useState();
   const [postError, setPostError] = useState();
   const [deleteError, setDeleteError] = useState();
@@ -33,40 +39,15 @@ export default function Cookbooks() {
   const [confirmationModal, setConfirmationModal] = useState(false);
   const classes = useStyles();
 
-  useEffect(() => {
-    getCookbooks();
-    getRecipes();
-  }, []);
-
-  function getCookbooks() {
-    axios
-      .get("/cookbooks")
-      .then(responses => setCookbooks(responses.data))
-      .catch(error => setGetError(error.response.status));
-  }
+  useEffect(() => {}, []);
 
   function onChange(event) {
     setName(event.target.value);
   }
 
-  function createCookbook() {
-    let newCookbook = { name: name };
-    axios
-      .post("/cookbooks", newCookbook)
-      .then(() => getCookbooks())
-      .then(() => setName(""))
-      .catch(error => setPostError(error.response.status));
-  }
-
-  function deleteCookbook(id) {
-    axios
-      .delete("/cookbooks/" + id)
-      .then(() => getCookbooks())
-      .catch(error =>
-        setDeleteError(
-          "Erreur serveur - Le livre de recette n'a pas été supprimé, veuillez réesayer plus tard"
-        )
-      );
+  function saveCookbook() {
+    let newCookbook = { id: idCookbookNumber + 1, name: name, recipes: [] };
+    createCookbook(newCookbook);
   }
 
   async function addRecipeToCookbook(cookbookId, recipeId) {
@@ -75,18 +56,11 @@ export default function Cookbooks() {
         "/cookbooks/" + cookbookId + "/recipe/" + recipeId
       );
       if (response) {
-        getCookbooks();
         setConfirmationModal(true);
       }
     } catch (error) {
       setAddError(true);
     }
-  }
-
-  function deleteRecipeFromCookbook(cookbookId, recipeId) {
-    axios
-      .delete("/cookbooks/" + cookbookId + "/recipe/" + recipeId)
-      .then(() => getCookbooks());
   }
 
   function describeError(error) {
@@ -126,7 +100,7 @@ export default function Cookbooks() {
         />
       </Grid>
       <Box my={2}>
-        <Button onClick={createCookbook} variant="contained" color="primary">
+        <Button onClick={saveCookbook} variant="contained" color="primary">
           Créer
         </Button>
       </Box>
@@ -145,14 +119,16 @@ export default function Cookbooks() {
           ))}
         </Grid>
       ) : (
-          <Box mt={25}>{!getError && <CircularProgress />}</Box>
-        )}
+        <Box mt={25}>{!getError && <CircularProgress />}</Box>
+      )}
       <Grid item>
         {deleteError && <Typography align="center">{deleteError}</Typography>}
       </Grid>
       <Grid item>
         {getError && (
-          <Typography align="center">{describeError(getError)}</Typography>)}</Grid>
+          <Typography align="center">{describeError(getError)}</Typography>
+        )}
+      </Grid>
       {confirmationModal && (
         <ConfirmationModal
           open={confirmationModal}
@@ -165,7 +141,8 @@ export default function Cookbooks() {
           open={addError}
           handleOpen={handleOpenError}
           title={"La recette est déjà présente dans le livre de recette"}
-        />)}
+        />
+      )}
     </Grid>
-  )
+  );
 }
