@@ -130,10 +130,9 @@ export default function Cookbooks() {
           Créer
         </Button>
       </Box>
-
-      <Grid container spacing={1} item xs={11} md={10} lg={6}>
-        {cookbooks ? (
-          cookbooks.map(cookbook => (
+      {cookbooks ? (
+        <Grid container spacing={1} item xs={11} md={10} lg={6}>
+          {cookbooks.map(cookbook => (
             <Grid item lg={6} key={cookbook.id}>
               <CookbookCard
                 cookbook={cookbook}
@@ -143,15 +142,17 @@ export default function Cookbooks() {
                 deleteRecipeFromCookbook={deleteRecipeFromCookbook}
               />
             </Grid>
-          ))
-        ) : (
-            <Box mt={25}>{!getError && <CircularProgress />}</Box>
-          )}
+          ))}
+        </Grid>
+      ) : (
+          <Box mt={25}>{!getError && <CircularProgress />}</Box>
+        )}
+      <Grid item>
+        {deleteError && <Typography align="center">{deleteError}</Typography>}
       </Grid>
-      {deleteError && <Typography align="center">{deleteError}</Typography>}
-      {getError && (
-        <Typography align="center">{describeError(getError)}</Typography>
-      )}
+      <Grid item>
+        {getError && (
+          <Typography align="center">{describeError(getError)}</Typography>)}</Grid>
       {confirmationModal && (
         <ConfirmationModal
           open={confirmationModal}
@@ -164,8 +165,7 @@ export default function Cookbooks() {
           open={addError}
           handleOpen={handleOpenError}
           title={"La recette est déjà présente dans le livre de recette"}
-        />
-      )}
+        />)}
     </Grid>
-  );
+  )
 }

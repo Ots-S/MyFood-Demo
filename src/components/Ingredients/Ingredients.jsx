@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Ingredients() {
-  const [ingredient, setIngredient] = useState("");
   const { getIngredients, ingredients, getError } = useContext(Context)
+  const [ingredient, setIngredient] = useState("");
   const [image, setImage] = useState("");
   const [postError, setPostError] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -120,7 +120,7 @@ export default function Ingredients() {
           Ajouter
         </Button>
       </Box>
-      {ingredients ? (
+      {ingredients.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {ingredients.map(ingredient => (
             <Grid item xs={4} md={4} lg={3} key={ingredient.id}>
@@ -135,8 +135,7 @@ export default function Ingredients() {
           <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
         )}
       <Grid item>
-
-        {getError && (<Box mt={25} mx={2}>
+        {getError && (<Box mx={2}>
           <Typography align="center">{describeError(getError)}</Typography>
         </Box>)}
       </Grid>

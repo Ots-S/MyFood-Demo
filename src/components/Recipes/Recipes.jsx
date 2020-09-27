@@ -28,11 +28,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Recipes() {
-  const { getIngredients, ingredients, getRecipes, recipes } = useContext(Context);
+  const { getIngredients, ingredients, getRecipes, recipes, getError } = useContext(Context);
   const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
-  const [getError, setGetError] = useState(false);
   const [postError, setPostError] = useState(false);
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
@@ -184,7 +183,7 @@ function Recipes() {
         Enregistrer la recette
       </Button>
 
-      {recipes ? (
+      {recipes.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {recipes.map(recipe => (
             <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
@@ -204,10 +203,11 @@ function Recipes() {
         )}
       <Grid item>
         {getError && (
-          <Typography align="center">{describeError(getError)}</Typography>
+          <Box mx={2}>
+            <Typography align="center">{describeError(getError)}</Typography></Box>
         )}
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 
