@@ -15,7 +15,7 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ConfirmationModal from "../ConfirmationModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-import { Context } from "../../Context"
+import { Context } from "../../Context";
 
 const useStyles = makeStyles({
   root: {},

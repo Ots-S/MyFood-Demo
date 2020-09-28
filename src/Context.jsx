@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from "react";
-import axios from "axios";
 
 const Context = createContext();
 
@@ -9,7 +8,7 @@ function ContextProvider(props) {
   const [cookbooks, setCookbooks] = useState([]);
   const [getError, setGetError] = useState();
   const [postError, setPostError] = useState();
-  const [idNumber, setIdNumber] = useState(4);
+  const [idNumber, setIdNumber] = useState(6);
   const [idRecipeNumber, setIdRecipeNumber] = useState(1);
   const [idCookbookNumber, setIdCookbookNumer] = useState(0);
 
@@ -28,15 +27,27 @@ function ContextProvider(props) {
     },
     {
       id: 3,
-      name: "Carotte",
+      name: "Carottes",
       image:
         "https://img.cuisineaz.com/660x660/2018-07-02/i140767-soupe-de-fanes-de-carottes.jpeg",
     },
     {
       id: 4,
-      name: "Test",
+      name: "Riz",
       image:
-        "https://img.cuisineaz.com/660x660/2018-07-02/i140767-soupe-de-fanes-de-carottes.jpeg",
+        "https://www.boomerang.bio/wp-content/uploads/2019/03/riz_basmati_blanc_bio_vrac.jpg",
+    },
+    {
+      id: 5,
+      name: "Coriandre",
+      image:
+        "https://www.canalvie.com/polopoly_fs/1.1182904!/image/coriandre.jpg_gen/derivatives/max_568/coriandre.jpg",
+    },
+    {
+      id: 6,
+      name: "Beurre de cacahuète",
+      image:
+        "https://blog.labrigadedevero.com/wp-content/uploads/sites/4/2019/10/beurre-de-cacahu%C3%A8te.jpg",
     },
   ];
 
@@ -99,6 +110,7 @@ function ContextProvider(props) {
   function createCookbook(cookbook) {
     const newCookooks = [...cookbooks, cookbook];
     setCookbooks(newCookooks);
+    setIdCookbookNumer(prevState => prevState + 1);
   }
 
   function deleteIngredient(ingredient) {
@@ -114,6 +126,7 @@ function ContextProvider(props) {
       existingRecipe => existingRecipe !== recipe
     );
     setRecipes(newRecipes);
+    setIdRecipeNumber(prevState => prevState--);
   }
 
   function deleteCookbook(cookbook) {
@@ -121,6 +134,7 @@ function ContextProvider(props) {
       existingCookbook => existingCookbook !== cookbook
     );
     setCookbooks(newCookbooks);
+    setIdCookbookNumer(prevState => prevState--);
   }
 
   function addIngredientToRecipe(recipe, ingredient) {
@@ -143,6 +157,18 @@ function ContextProvider(props) {
     setCookbooks([...previousCookbooks, cookbook]);
   }
 
+  function removeIngredientFromRecipe(recipe, ingredient) {
+    const newRecipe = recipes.find(existingRecipe => existingRecipe === recipe);
+    const previousRecipes = recipes.filter(
+      existingRecipe => existingRecipe !== recipe
+    );
+    const newIngredients = newRecipe.ingredients.filter(
+      existingIngredient => existingIngredient !== ingredient
+    );
+    newRecipe.ingredients = newIngredients;
+    setRecipes([...previousRecipes, newRecipe]);
+  }
+
   function deleteRecipeFromCookbook(cookbook, recipe) {
     const previousCookbooks = cookbooks.filter(
       existingCookbook => existingCookbook !== cookbook
@@ -160,11 +186,12 @@ function ContextProvider(props) {
   return (
     <Context.Provider
       value={{
+        ingredients,
+        recipes,
+        cookbooks,
         postError,
         setPostError,
         idNumber,
-        ingredients,
-        recipes,
         getError,
         setGetError,
         deleteIngredient,
@@ -174,11 +201,11 @@ function ContextProvider(props) {
         idRecipeNumber,
         deleteRecipe,
         createCookbook,
-        cookbooks,
         deleteCookbook,
         addRecipeToCookbook,
         idCookbookNumber,
         deleteRecipeFromCookbook,
+        removeIngredientFromRecipe,
       }}
     >
       {props.children}

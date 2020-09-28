@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import { makeStyles } from "@material-ui/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -34,6 +33,7 @@ function Recipes() {
     getError,
     idRecipeNumber,
     createRecipe,
+    removeIngredientFromRecipe,
   } = useContext(Context);
   const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
@@ -47,10 +47,6 @@ function Recipes() {
     if (!recipeIngredients.includes(ingredient)) {
       setRecipeIngredients(prevState => [...prevState, ingredient]);
     }
-  }
-
-  function removeIngredientFromRecipe(recipe, ingredient) {
-    axios.delete(`/recipes/${recipe}/ingredient/${ingredient}`);
   }
 
   function unselectIngredientFromRecipe(ingredient) {
