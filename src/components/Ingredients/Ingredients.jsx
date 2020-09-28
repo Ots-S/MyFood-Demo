@@ -10,7 +10,7 @@ import axios from "axios";
 import IngredientCard from "./IngredientCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "../Input";
-import { Context } from "../../Context"
+import { Context } from "../../Context";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -25,7 +25,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Ingredients() {
-  const { ingredients, createIngredient, getError, idNumber, postError, setPostError } = useContext(Context)
+  const {
+    ingredients,
+    createIngredient,
+    getError,
+    idNumber,
+    postError,
+    setPostError,
+  } = useContext(Context);
   const [ingredient, setIngredient] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
@@ -42,9 +49,11 @@ export default function Ingredients() {
   function saveIngredient() {
     if (isValidImageUrl(image)) {
       const newIngredient = {
-        id: idNumber + 1, name: ingredient, image: image
+        id: idNumber + 1,
+        name: ingredient,
+        image: image,
       };
-      createIngredient(newIngredient)
+      createIngredient(newIngredient);
       setIngredient("");
       setImage("");
     } else {
@@ -109,20 +118,20 @@ export default function Ingredients() {
       {ingredients.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {ingredients.map(ingredient => (
-            <Grid item xs={4} md={4} lg={3} key={ingredient.id}>
-              <IngredientCard
-                ingredient={ingredient}
-              />
+            <Grid item xs={12} sm={4} md={4} lg={4} key={ingredient.id}>
+              <IngredientCard ingredient={ingredient} />
             </Grid>
           ))}
         </Grid>
       ) : (
-          <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
-        )}
+        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+      )}
       <Grid item>
-        {getError && (<Box mx={2}>
-          <Typography align="center">{describeError(getError)}</Typography>
-        </Box>)}
+        {getError && (
+          <Box mx={2}>
+            <Typography align="center">{describeError(getError)}</Typography>
+          </Box>
+        )}
       </Grid>
     </Grid>
   );

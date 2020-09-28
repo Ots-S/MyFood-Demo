@@ -12,7 +12,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
-import { Context } from "../../Context"
+import { Context } from "../../Context";
 
 const useStyles = makeStyles({
   ingredientContainer: {
@@ -24,13 +24,18 @@ const useStyles = makeStyles({
     height: "5rem",
     objectFit: "cover",
   },
-  deleteButton: { "&:hover": { color: "teal" } },
+  cardContent: {
+    height: "4rem",
+  },
+  title: {
+    fontSize: "17px",
+  },
 });
 
 export default function IngredientContainer({ ingredient }) {
   const classes = useStyles();
   const [open, setOpen] = useState();
-  const { deleteIngredient } = useContext(Context)
+  const { deleteIngredient } = useContext(Context);
 
   function handleOpen() {
     setOpen(prev => !prev);
@@ -39,8 +44,8 @@ export default function IngredientContainer({ ingredient }) {
   return (
     <Card className={classes.ingredientContainer}>
       <Grid container justify="center">
-        <CardContent>
-          <Typography color="primary">
+        <CardContent className={classes.cardContent}>
+          <Typography color="primary" align="center" className={classes.title}>
             {ingredient.name.toUpperCase()}
           </Typography>
         </CardContent>
@@ -52,7 +57,7 @@ export default function IngredientContainer({ ingredient }) {
         />
         <CardActions>
           <Button onClick={() => setOpen(prev => !prev)}>
-            <DeleteOutlineIcon className={classes.deleteButton} />
+            <DeleteOutlineIcon />
           </Button>
         </CardActions>
       </Grid>

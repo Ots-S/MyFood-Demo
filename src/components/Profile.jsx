@@ -21,29 +21,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Profile(props) {
   const classes = useStyles();
-  const [recipesCount, setRecipesCount] = useState();
-  const [ingredientsCount, setIngredientsCount] = useState();
-  const [cookbooksCount, setCookbooksCount] = useState()
-
-
+  const { recipes, cookbooks } = useContext(Context)
 
   useEffect(() => {
-    getRecipesCount()
-    getIngredientsCount()
-    getCookbooksCount()
+
   }, []);
-
-  function getIngredientsCount() {
-    axios.get("/ingredients").then(responses => setIngredientsCount(responses.data.length))
-  }
-
-  function getRecipesCount() {
-    axios.get("/recipes").then(responses => setRecipesCount(responses.data.length))
-  }
-
-  function getCookbooksCount() {
-    axios.get("/cookbooks").then(responses => setCookbooksCount(responses.data.length))
-  }
 
   return (
     <Grid
@@ -55,9 +37,8 @@ export default function Profile(props) {
     >
       <Typography variant="h6" className={classes.title}>Marc</Typography>
       <img className={classes.avatar} src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png" alt="avatar" />
-      <Typography>Nombre d'ingrédients : {ingredientsCount}</Typography>
-      <Typography>Nombre de recettes : {recipesCount}</Typography>
-      <Typography>Nombre de livres de recettes : {cookbooksCount}</Typography>
+      <Typography>Nombre de recettes : {recipes.length}</Typography>
+      <Typography>Nombre de livres de recettes : {cookbooks.length}</Typography>
     </Grid>
   );
 }

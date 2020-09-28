@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import homeImage from "../assets/photo-1566385101042-1a0aa0c1268c.jpg";
+import homeImage from "../assets/background-image.jpg";
 
 const useStyles = makeStyles({
   container: {
@@ -31,6 +31,8 @@ export default function Home() {
         justify="center"
         alignItems="center"
         xs={8}
+        sm={6}
+        md={4}
         lg={2}
         className={classes.content}
       >

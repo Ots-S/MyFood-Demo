@@ -57,9 +57,7 @@ const useStyles = makeStyles(theme => ({
   selectedIcon: {
     color: "green",
   },
-  link: {
-    fontWeight: "400",
-  },
+  link: {},
   drawerPaper: {
     width: drawerWidth,
   },
@@ -76,7 +74,7 @@ export default function ResponsiveDrawer() {
   let history = useHistory();
 
   const itemsList = [
-    { id: 1, name: "Home", path: "/", icon: <HomeIcon /> },
+    { id: 1, name: "Accueil", path: "/", icon: <HomeIcon /> },
     { id: 2, name: "Ingrédients", path: "/ingredients", icon: <AppleIcon /> },
     { id: 3, name: "Recettes", path: "/recipes", icon: <ListAltIcon /> },
     {
@@ -123,7 +121,11 @@ export default function ResponsiveDrawer() {
               >
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.name.toUpperCase()} />
+              <ListItemText disableTypography>
+                <Typography variant="body1">
+                  {item.name.toUpperCase()}
+                </Typography>
+              </ListItemText>
             </ListItem>
           </Box>
         ))}
