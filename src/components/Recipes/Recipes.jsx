@@ -168,16 +168,22 @@ function Recipes() {
       </Box>
       {recipes.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipes.map(recipe => (
-            <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
-              <RecipeCard
-                key={recipe.id}
-                recipe={recipe}
-                removeIngredientFromRecipe={removeIngredientFromRecipe}
-                ingredients={ingredients}
-              />
-            </Grid>
-          ))}
+          {recipes
+            .sort(function (a, b) {
+              if (a.id !== b.id) {
+                return a.id - b.id;
+              }
+            })
+            .map(recipe => (
+              <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
+                <RecipeCard
+                  key={recipe.id}
+                  recipe={recipe}
+                  removeIngredientFromRecipe={removeIngredientFromRecipe}
+                  ingredients={ingredients}
+                />
+              </Grid>
+            ))}
         </Grid>
       ) : (
         <Box mt={25}>

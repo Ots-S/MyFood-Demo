@@ -8,6 +8,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ConfirmationModal from "../ConfirmationModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Button,
   Typography,
@@ -36,6 +37,7 @@ export default function CookbookCard({
     openDeleteConfirmationModal,
     setOpenDeleteConfirmationModal,
   ] = useState(false);
+  const [isButtonHover, setIsButtonHover] = useState(false);
   const { addRecipeToCookbook } = useContext(Context);
 
   function openRecipesPopUp() {
@@ -53,10 +55,6 @@ export default function CookbookCard({
   function addRecipCookbook() {
     addRecipeToCookbook(cookbook, recipe);
     setRecipe("");
-  }
-
-  function alerteme() {
-    console.log("HU");
   }
 
   return (
@@ -103,8 +101,12 @@ export default function CookbookCard({
           <Button onClick={() => openRecipesPopUp()}>
             <FormatListBulletedIcon />
           </Button>
-          <Button onClick={openDeleteModal}>
-            <DeleteOutlineIcon />
+          <Button
+            onClick={openDeleteModal}
+            onMouseOver={() => setIsButtonHover(true)}
+            onMouseLeave={() => setIsButtonHover(false)}
+          >
+            {isButtonHover ? <DeleteIcon /> : <DeleteOutlineIcon />}
           </Button>
         </CardActions>
       </Grid>

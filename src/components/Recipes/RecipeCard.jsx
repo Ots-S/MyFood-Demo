@@ -15,6 +15,7 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ConfirmationModal from "../ConfirmationModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { Context } from "../../Context";
 
 const useStyles = makeStyles({
@@ -37,6 +38,7 @@ export default function RecipeCard({
   const { deleteRecipe } = useContext(Context);
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
+  const [isButtonHover, setIsButtonHover] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openAddingModal, setOpenAddingModal] = useState(false);
 
@@ -51,8 +53,6 @@ export default function RecipeCard({
   function openAddingIngredientModal() {
     setOpenAddingModal(prevState => !prevState);
   }
-
-  console.log(recipe);
 
   return (
     <Card className={classes.root} elevation={3}>
@@ -80,8 +80,13 @@ export default function RecipeCard({
           <Button color="primary" onClick={openIngredientsPopUp}>
             <FormatListBulletedIcon />
           </Button>
-          <Button color="primary" onClick={openDeletePopUp}>
-            <DeleteOutlineIcon />
+          <Button
+            color="primary"
+            onClick={openDeletePopUp}
+            onMouseOver={() => setIsButtonHover(true)}
+            onMouseLeave={() => setIsButtonHover(false)}
+          >
+            {isButtonHover ? <DeleteIcon /> : <DeleteOutlineIcon />}
           </Button>
         </CardActions>
       </Grid>
