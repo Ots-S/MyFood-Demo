@@ -15,9 +15,6 @@ export default createMuiTheme({
         color: green[800],
         backgroundColor: green,
         textPrimary: "white",
-        "&:hover": {
-          color: "darkgreen",
-        },
       },
     },
   },
