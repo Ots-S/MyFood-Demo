@@ -59,9 +59,9 @@ function ContextProvider(props) {
       ingredients: [
         {
           id: 1,
-          name: "Riz",
+          name: "Nouilles de riz",
           image:
-            "https://www.boomerang.bio/wp-content/uploads/2019/03/riz_basmati_blanc_bio_vrac.jpg",
+            "https://storage.googleapis.com/cdn-recette-ramen-site-19/production/2019/08/Ramen-pate.jpg",
         },
         {
           id: 2,
@@ -113,12 +113,22 @@ function ContextProvider(props) {
     setIdCookbookNumer(prevState => prevState + 1);
   }
 
-  function deleteIngredient(ingredient) {
+  async function deleteIngredient(ingredient) {
     const newIngredientsList = ingredients.filter(
       existingIngredient => existingIngredient !== ingredient
     );
     setIngredients(newIngredientsList);
     setIdNumber(prevState => prevState--);
+    let recipeToModify = {};
+    recipes.forEach(existingRecipe => {
+      existingRecipe.ingredients.forEach(existingIngredient => {
+        if (existingIngredient.id === ingredient.id) {
+          recipeToModify = existingRecipe;
+        }
+      });
+    });
+    console.log("deleteIgredient", recipeToModify, ingredient);
+    removeIngredientFromRecipe(recipeToModify, ingredient);
   }
 
   function deleteRecipe(recipe) {
@@ -158,14 +168,16 @@ function ContextProvider(props) {
   }
 
   function removeIngredientFromRecipe(recipe, ingredient) {
+    console.log(ingredient);
     const newRecipe = recipes.find(existingRecipe => existingRecipe === recipe);
     const previousRecipes = recipes.filter(
       existingRecipe => existingRecipe !== recipe
     );
     const newIngredients = newRecipe.ingredients.filter(
-      existingIngredient => existingIngredient !== ingredient
+      existingIngredient => existingIngredient.id !== ingredient.id
     );
     newRecipe.ingredients = newIngredients;
+
     setRecipes([...previousRecipes, newRecipe]);
   }
 
