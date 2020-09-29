@@ -86,7 +86,7 @@ export default function Ingredients() {
       alignItems="center"
       className={classes.container}
     >
-      <Grid container item xs={10} sm={8} md={6} lg={3}>
+      <Grid direction="column" container item xs={10} sm={8} md={6} lg={3}>
         <Input
           label="Entrez le nom d'un ingrédient"
           value={ingredient}

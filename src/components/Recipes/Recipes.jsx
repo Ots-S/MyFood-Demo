@@ -161,6 +161,7 @@ function Recipes() {
         onClick={() => saveRecipe()}
         disabled={!recipeName || !recipeIngredients.length > 0}
         className={classes.button}
+        my={2}
       >
         Enregistrer la recette
       </Button>
