@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ConfirmationModal from "../ConfirmationModal";
+import DeleteConfirmationModal from "../DeleteConfirmationModal";
 import {
   Button,
   Typography,
@@ -31,10 +32,18 @@ export default function CookbookCard({
   const classes = useStyles();
   const [recipe, setRecipe] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [
+    openDeleteConfirmationModal,
+    setOpenDeleteConfirmationModal,
+  ] = useState(false);
   const { addRecipeToCookbook } = useContext(Context);
 
   function openRecipesPopUp() {
     setOpenModal(prevState => !prevState);
+  }
+
+  function openDeleteModal() {
+    setOpenDeleteConfirmationModal(prevState => !prevState);
   }
 
   function handleChange(event) {
@@ -90,7 +99,7 @@ export default function CookbookCard({
           <Button onClick={() => openRecipesPopUp()}>
             <FormatListBulletedIcon />
           </Button>
-          <Button onClick={() => deleteCookbook(cookbook)}>
+          <Button onClick={openDeleteModal}>
             <DeleteOutlineIcon />
           </Button>
         </CardActions>
@@ -103,6 +112,15 @@ export default function CookbookCard({
           items={cookbook.recipes}
           handleOpen={openRecipesPopUp}
           deleteRecipeFromCookbook={deleteRecipeFromCookbook}
+        />
+      )}
+      {openDeleteModal && (
+        <DeleteConfirmationModal
+          title={"Êtes-vous sûr de vouloir supprimer ce livre de recettes ?"}
+          element={cookbook}
+          open={openDeleteConfirmationModal}
+          handleOpen={openDeleteModal}
+          deleteElement={deleteCookbook}
         />
       )}
     </Card>
