@@ -116,29 +116,30 @@ function Recipes() {
           helperText={imageError && "Lien non valide, vérifiez l'extension"}
           className={classes.input}
         />
-      </Grid>
-      <Grid item>
-        <Box my={2}>
-          <Autocomplete
-            disableClearable
-            value={ingredient}
-            onChange={(event, newIngredient) => {
-              addIngredientToRecipeCreation(newIngredient);
-            }}
-            id="Ajouter un ingrédient"
-            options={ingredients}
-            getOptionLabel={ingredient => ingredient.name}
-            style={{ width: "25rem" }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label="Ajouter un ingrédient"
-                variant="outlined"
-                required
-              />
-            )}
-          />
-        </Box>
+        <Grid item xs={12}>
+          <Box my={2}>
+            <Autocomplete
+              fullWidth
+              disableClearable
+              value={ingredient}
+              onChange={(event, newIngredient) => {
+                addIngredientToRecipeCreation(newIngredient);
+              }}
+              id="Ajouter un ingrédient"
+              options={ingredients}
+              getOptionLabel={ingredient => ingredient.name}
+              renderInput={params => (
+                <TextField
+                  fullWidth
+                  {...params}
+                  label="Ajouter un ingrédient"
+                  variant="outlined"
+                  required
+                />
+              )}
+            />
+          </Box>
+        </Grid>
       </Grid>
       {recipeIngredients.length > 0 && (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>

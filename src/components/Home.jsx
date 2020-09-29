@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import homeImage from "../assets/background-image.jpg";
+import backgroundImage from "../assets/background-image.jpg";
 
 const useStyles = makeStyles({
   container: {
-    backgroundImage: `url(${homeImage})`,
+    backgroundImage: `url(${backgroundImage})`,
     height: "100vh",
     backgroundSize: "cover",
     opacity: 0.9,
