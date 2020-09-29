@@ -30,7 +30,6 @@ function Recipes() {
   const {
     ingredients,
     recipes,
-    getError,
     idRecipeNumber,
     createRecipe,
     removeIngredientFromRecipe,
@@ -100,7 +99,7 @@ function Recipes() {
     >
       <Grid container item xs={10} sm={8} md={6} lg={3}>
         <Input
-          label="Entrez le nom de la recette"
+          label="Entrez le nom d'une recette"
           value={recipeName}
           onChange={event => setRecipeName(event.target.value)}
           onFocus={() => setPostError(false)}
@@ -108,7 +107,7 @@ function Recipes() {
           helperText={describeError(postError)}
         />
         <Input
-          label="Entrez le lien d'une image (.jpg ou .png)"
+          label="Entrez le lien d'une image (jpg ou png)"
           value={image}
           onChange={event => setImage(event.target.value)}
           onFocus={() => setImageError(false)}
@@ -181,15 +180,10 @@ function Recipes() {
           ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+        <Box mt={25}>
+          <CircularProgress color="primary" />
+        </Box>
       )}
-      <Grid item>
-        {getError && (
-          <Box mx={2}>
-            <Typography align="center">{describeError(getError)}</Typography>
-          </Box>
-        )}
-      </Grid>
     </Grid>
   );
 }

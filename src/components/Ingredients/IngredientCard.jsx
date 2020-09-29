@@ -12,6 +12,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { Context } from "../../Context";
 
 const useStyles = makeStyles({
@@ -35,6 +36,7 @@ const useStyles = makeStyles({
 export default function IngredientContainer({ ingredient }) {
   const classes = useStyles();
   const [open, setOpen] = useState();
+  const [isButtonHover, setIsButtonHover] = useState(false);
   const { deleteIngredient } = useContext(Context);
 
   function handleOpen() {
@@ -42,7 +44,7 @@ export default function IngredientContainer({ ingredient }) {
   }
 
   return (
-    <Card className={classes.ingredientContainer}>
+    <Card className={classes.ingredientContainer} elevation={3}>
       <Grid container justify="center">
         <CardContent className={classes.cardContent}>
           <Typography color="primary" align="center" className={classes.title}>
@@ -56,8 +58,12 @@ export default function IngredientContainer({ ingredient }) {
           title={ingredient.name}
         />
         <CardActions>
-          <Button onClick={() => setOpen(prev => !prev)}>
-            <DeleteOutlineIcon />
+          <Button
+            onClick={handleOpen}
+            onMouseOver={() => setIsButtonHover(true)}
+            onMouseLeave={() => setIsButtonHover(false)}
+          >
+            {isButtonHover ? <DeleteIcon /> : <DeleteOutlineIcon />}
           </Button>
         </CardActions>
       </Grid>

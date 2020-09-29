@@ -3,6 +3,8 @@ import {
   Button,
   Dialog,
   DialogActions,
+  DialogContent,
+  DialogContentText,
   DialogTitle,
   Grid,
 } from "@material-ui/core";
@@ -21,6 +23,7 @@ export default function DeleteConfirmationModal({
 
   return (
     <Dialog
+      disableScrollLock
       open={open}
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
@@ -28,6 +31,11 @@ export default function DeleteConfirmationModal({
       <DialogTitle id="dialog-title" align="center">
         {title}
       </DialogTitle>
+      <DialogContent>
+        <Grid container justify="center">
+          <DialogContentText>{element.name.toUpperCase()}</DialogContentText>
+        </Grid>
+      </DialogContent>
       <DialogActions>
         <Grid container justify="space-around">
           <Button

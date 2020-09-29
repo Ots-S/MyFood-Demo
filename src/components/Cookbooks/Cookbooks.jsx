@@ -32,7 +32,7 @@ export default function Cookbooks() {
     deleteRecipeFromCookbook,
   } = useContext(Context);
   const [name, setName] = useState("");
-  const [getError, setGetError] = useState();
+
   const [postError, setPostError] = useState();
   const [deleteError, setDeleteError] = useState();
   const [addError, setAddError] = useState();
@@ -119,15 +119,12 @@ export default function Cookbooks() {
           ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress />}</Box>
+        <Box mt={25}>
+          <CircularProgress />
+        </Box>
       )}
       <Grid item>
         {deleteError && <Typography align="center">{deleteError}</Typography>}
-      </Grid>
-      <Grid item>
-        {getError && (
-          <Typography align="center">{describeError(getError)}</Typography>
-        )}
       </Grid>
       {confirmationModal && (
         <ConfirmationModal

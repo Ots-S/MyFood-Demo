@@ -6,11 +6,10 @@ function ContextProvider(props) {
   const [ingredients, setIngredients] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [cookbooks, setCookbooks] = useState([]);
-  const [getError, setGetError] = useState();
-  const [postError, setPostError] = useState();
-  const [idNumber, setIdNumber] = useState(6);
-  const [idRecipeNumber, setIdRecipeNumber] = useState(1);
-  const [idCookbookNumber, setIdCookbookNumer] = useState(0);
+  const [postError, setPostError] = useState(false);
+  const [ingredientIndex, setIngredientIndex] = useState(9);
+  const [recipeIndex, setRecipeIndex] = useState(2);
+  const [cookookIndex, setCookbookIndex] = useState(0);
 
   const ingredientsList = [
     {
@@ -49,6 +48,24 @@ function ContextProvider(props) {
       image:
         "https://blog.labrigadedevero.com/wp-content/uploads/sites/4/2019/10/beurre-de-cacahu%C3%A8te.jpg",
     },
+    {
+      id: 7,
+      name: "Poireaux",
+      image:
+        "https://www.notretemps.com/cache/com_zoo_images/c2/bienfaits-poireaux_3c85175fefcb924f9fc83ab832006c79.jpg",
+    },
+    {
+      id: 8,
+      name: "Farine",
+      image:
+        "https://i.f1g.fr/media/madame/1900x1900/sites/default/files/img/2017/01/farine.jpg",
+    },
+    {
+      id: 9,
+      name: "Tomates",
+      image:
+        "https://medias.pourlascience.fr/api/v1/images/view/5a82b0f78fe56f227c7d9cbb/wide_1300/image.jpg",
+    },
   ];
 
   const recipesList = [
@@ -77,6 +94,26 @@ function ContextProvider(props) {
         },
       ],
     },
+    {
+      id: 2,
+      name: "Tarte aux poireaux",
+      image:
+        "https://bloomingnolwenn.com/wp-content/uploads/2018/11/IMG_3285-1-720x720.jpg",
+      ingredients: [
+        {
+          id: 7,
+          name: "Poireaux",
+          image:
+            "https://www.notretemps.com/cache/com_zoo_images/c2/bienfaits-poireaux_3c85175fefcb924f9fc83ab832006c79.jpg",
+        },
+        {
+          id: 8,
+          name: "Farine",
+          image:
+            "https://i.f1g.fr/media/madame/1900x1900/sites/default/files/img/2017/01/farine.jpg",
+        },
+      ],
+    },
   ];
 
   useEffect(() => {
@@ -94,23 +131,23 @@ function ContextProvider(props) {
       }
     });
     if (alreadyExist) {
-      setPostError(406);
+      setPostError(true);
     } else {
       setIngredients([...ingredients, ingredient]);
-      setIdNumber(prevState => prevState + 1);
+      setIngredientIndex(prevState => prevState + 1);
     }
   }
 
   function createRecipe(recipe) {
     const newRecipes = [...recipes, recipe];
     setRecipes(newRecipes);
-    setIdRecipeNumber(prevState => prevState + 1);
+    setRecipeIndex(prevState => prevState + 1);
   }
 
   function createCookbook(cookbook) {
     const newCookooks = [...cookbooks, cookbook];
     setCookbooks(newCookooks);
-    setIdCookbookNumer(prevState => prevState + 1);
+    setCookbookIndex(prevState => prevState + 1);
   }
 
   async function deleteIngredient(ingredient) {
@@ -118,7 +155,7 @@ function ContextProvider(props) {
       existingIngredient => existingIngredient !== ingredient
     );
     setIngredients(newIngredientsList);
-    setIdNumber(prevState => prevState--);
+    setIngredientIndex(prevState => prevState--);
     let recipeToModify = {};
     recipes.forEach(existingRecipe => {
       existingRecipe.ingredients.forEach(existingIngredient => {
@@ -135,7 +172,7 @@ function ContextProvider(props) {
       existingRecipe => existingRecipe !== recipe
     );
     setRecipes(newRecipes);
-    setIdRecipeNumber(prevState => prevState--);
+    setRecipeIndex(prevState => prevState--);
     let cookbookToModify = {};
     cookbooks.forEach(existingCookbook => {
       existingCookbook.recipes.forEach(existingRecipe => {
@@ -152,7 +189,7 @@ function ContextProvider(props) {
       existingCookbook => existingCookbook !== cookbook
     );
     setCookbooks(newCookbooks);
-    setIdCookbookNumer(prevState => prevState--);
+    setCookbookIndex(prevState => prevState--);
   }
 
   function addIngredientToRecipe(recipe, ingredient) {
@@ -214,19 +251,17 @@ function ContextProvider(props) {
         cookbooks,
         postError,
         setPostError,
-        idNumber,
-        getError,
-        setGetError,
+        idNumber: ingredientIndex,
         deleteIngredient,
         createIngredient,
         addIngredientToRecipe,
         createRecipe,
-        idRecipeNumber,
+        idRecipeNumber: recipeIndex,
         deleteRecipe,
         createCookbook,
         deleteCookbook,
         addRecipeToCookbook,
-        idCookbookNumber,
+        idCookbookNumber: cookookIndex,
         deleteRecipeFromCookbook,
         removeIngredientFromRecipe,
       }}

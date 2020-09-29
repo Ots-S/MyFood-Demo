@@ -55,8 +55,12 @@ export default function CookbookCard({
     setRecipe("");
   }
 
+  function alerteme() {
+    console.log("HU");
+  }
+
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={3}>
       <Grid container item justify="center">
         <CardContent>
           <Typography color="primary" variant="h5" component="h2">

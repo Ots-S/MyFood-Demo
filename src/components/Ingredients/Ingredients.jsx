@@ -1,12 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Collapse,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import React, { useState, useContext } from "react";
+import { Box, Button, CircularProgress, Grid } from "@material-ui/core";
 import IngredientCard from "./IngredientCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "../Input";
@@ -27,19 +20,18 @@ const useStyles = makeStyles(theme => ({
 export default function Ingredients() {
   const {
     ingredients,
+    ingredientIndex,
     createIngredient,
-    getError,
-    idNumber,
     postError,
     setPostError,
   } = useContext(Context);
-  const [ingredient, setIngredient] = useState("");
+  const [ingredientName, setIngredientName] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
   const classes = useStyles();
 
-  function onChange(event) {
-    setIngredient(event.target.value);
+  function onChangeInput(event) {
+    setIngredientName(event.target.value);
   }
 
   function onChangeImage(event) {
@@ -49,12 +41,12 @@ export default function Ingredients() {
   function saveIngredient() {
     if (isValidImageUrl(image)) {
       const newIngredient = {
-        id: idNumber + 1,
-        name: ingredient,
+        id: ingredientIndex + 1,
+        name: ingredientName,
         image: image,
       };
       createIngredient(newIngredient);
-      setIngredient("");
+      setIngredientName("");
       setImage("");
     } else {
       setImageError(true);
@@ -68,17 +60,6 @@ export default function Ingredients() {
     }
   }
 
-  function describeError(error) {
-    switch (error) {
-      case 406:
-        return "Ce nom existe déjà, veuillez en choisir un autre.";
-      case 500:
-        return "Erreur serveur - Impossible d'afficher ou d'envoyer des données, veuillez réessayer plus tard.";
-      default:
-        return "";
-    }
-  }
-
   return (
     <Grid
       container
@@ -86,17 +67,19 @@ export default function Ingredients() {
       alignItems="center"
       className={classes.container}
     >
-      <Grid direction="column" container item xs={10} sm={8} md={6} lg={3}>
+      <Grid container item direction="column" xs={10} sm={8} md={6} lg={3}>
         <Input
           label="Entrez le nom d'un ingrédient"
-          value={ingredient}
-          onChange={onChange}
+          value={ingredientName}
+          onChange={onChangeInput}
           onFocus={() => setPostError(false)}
           error={postError}
-          helperText={postError && describeError(postError)}
+          helperText={
+            postError && "Ce nom existe déjà, veuillez en choisir un autre."
+          }
         />
         <Input
-          label="Entrez le lien d'une image (.jpg ou .png)"
+          label="Entrez le lien d'une image (jpg ou png)"
           value={image}
           onChange={onChangeImage}
           onFocus={() => setImageError(false)}
@@ -110,7 +93,7 @@ export default function Ingredients() {
           color="primary"
           variant="contained"
           onClick={() => saveIngredient()}
-          disabled={!image || !ingredient}
+          disabled={!image || !ingredientName}
         >
           Ajouter
         </Button>
@@ -118,21 +101,16 @@ export default function Ingredients() {
       {ingredients.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {ingredients.map(ingredient => (
-            <Grid item xs={12} sm={4} md={4} lg={4} key={ingredient.id}>
+            <Grid item xs={12} sm={4} key={ingredient.id}>
               <IngredientCard ingredient={ingredient} />
             </Grid>
           ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+        <Box mt={25}>
+          <CircularProgress color="primary" />
+        </Box>
       )}
-      <Grid item>
-        {getError && (
-          <Box mx={2}>
-            <Typography align="center">{describeError(getError)}</Typography>
-          </Box>
-        )}
-      </Grid>
     </Grid>
   );
 }

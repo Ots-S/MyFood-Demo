@@ -55,7 +55,7 @@ export default function RecipeCard({
   console.log(recipe);
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={3}>
       <Grid container item direction="column" alignItems="center">
         <CardContent>
           <Typography
