@@ -3,10 +3,10 @@ import {
   Box,
   Button,
   CircularProgress,
+  Collapse,
   Grid,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
 import IngredientCard from "./IngredientCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "../Input";
