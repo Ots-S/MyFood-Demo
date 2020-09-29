@@ -155,16 +155,17 @@ function Recipes() {
           ))}
         </Grid>
       )}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => saveRecipe()}
-        disabled={!recipeName || !recipeIngredients.length > 0}
-        className={classes.button}
-      >
-        Enregistrer la recette
-      </Button>
-
+      <Box my={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => saveRecipe()}
+          disabled={!recipeName || !recipeIngredients.length > 0}
+          className={classes.button}
+        >
+          Enregistrer la recette
+        </Button>
+      </Box>
       {recipes.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {recipes.map(recipe => (

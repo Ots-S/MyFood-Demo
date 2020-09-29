@@ -17,12 +17,14 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     marginBottom: "5rem",
     marginTop: "5rem",
+    border: "10px solid green",
+    borderRadius: "50%",
   },
 }));
 
 export default function Profile(props) {
   const classes = useStyles();
-  const { recipes, cookbooks } = useContext(Context);
+  const { ingredients, recipes, cookbooks } = useContext(Context);
 
   useEffect(() => {}, []);
 
@@ -42,8 +44,15 @@ export default function Profile(props) {
       <Typography variant="h6" className={classes.title}>
         Sébastien
       </Typography>
-      <Typography>Nombre de recettes : {recipes.length}</Typography>
-      <Typography>Nombre de livres de recettes : {cookbooks.length}</Typography>
+      <Grid container direction="column" alignItems="center">
+        <Grid item>
+          <Typography>Nombre d'ingrédient : {ingredients.length}</Typography>
+          <Typography>Nombre de recettes : {recipes.length}</Typography>
+          <Typography>
+            Nombre de livres de recettes : {cookbooks.length}
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   );
 }

@@ -52,6 +52,8 @@ export default function RecipeCard({
     setOpenAddingModal(prevState => !prevState);
   }
 
+  console.log(recipe);
+
   return (
     <Card className={classes.root}>
       <Grid container item direction="column" alignItems="center">
