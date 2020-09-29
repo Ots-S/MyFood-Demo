@@ -100,7 +100,7 @@ function Recipes() {
     >
       <Grid container item xs={10} sm={8} md={6} lg={3}>
         <Input
-          label="Nom de la recette"
+          label="Entrez le nom de la recette"
           value={recipeName}
           onChange={event => setRecipeName(event.target.value)}
           onFocus={() => setPostError(false)}
@@ -108,7 +108,7 @@ function Recipes() {
           helperText={describeError(postError)}
         />
         <Input
-          label="Photo de la recette"
+          label="Entrez le lien d'une image (.jpg ou .png)"
           value={image}
           onChange={event => setImage(event.target.value)}
           onFocus={() => setImageError(false)}
@@ -128,7 +128,7 @@ function Recipes() {
             id="Ajouter un ingrédient"
             options={ingredients}
             getOptionLabel={ingredient => ingredient.name}
-            style={{ width: "22rem" }}
+            style={{ width: "25rem" }}
             renderInput={params => (
               <TextField
                 {...params}

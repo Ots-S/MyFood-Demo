@@ -127,7 +127,6 @@ function ContextProvider(props) {
         }
       });
     });
-    console.log("deleteIgredient", recipeToModify, ingredient);
     removeIngredientFromRecipe(recipeToModify, ingredient);
   }
 
@@ -137,6 +136,15 @@ function ContextProvider(props) {
     );
     setRecipes(newRecipes);
     setIdRecipeNumber(prevState => prevState--);
+    let cookbookToModify = {};
+    cookbooks.forEach(existingCookbook => {
+      existingCookbook.recipes.forEach(existingRecipe => {
+        if (existingRecipe.id === recipe.id) {
+          cookbookToModify = existingCookbook;
+        }
+      });
+    });
+    deleteRecipeFromCookbook(cookbookToModify, recipe);
   }
 
   function deleteCookbook(cookbook) {
@@ -173,12 +181,13 @@ function ContextProvider(props) {
     const previousRecipes = recipes.filter(
       existingRecipe => existingRecipe !== recipe
     );
-    const newIngredients = newRecipe.ingredients.filter(
-      existingIngredient => existingIngredient.id !== ingredient.id
-    );
-    newRecipe.ingredients = newIngredients;
-
-    setRecipes([...previousRecipes, newRecipe]);
+    if (newRecipe) {
+      const newIngredients = newRecipe.ingredients.filter(
+        existingIngredient => existingIngredient.id !== ingredient.id
+      );
+      newRecipe.ingredients = newIngredients;
+      setRecipes([...previousRecipes, newRecipe]);
+    }
   }
 
   function deleteRecipeFromCookbook(cookbook, recipe) {
@@ -188,11 +197,13 @@ function ContextProvider(props) {
     const newCookbook = cookbooks.find(
       existingCookbook => existingCookbook === cookbook
     );
-    const newRecipes = newCookbook.recipes.filter(
-      existingRecipes => existingRecipes !== recipe
-    );
-    newCookbook.recipes = [...newRecipes];
-    setCookbooks([...previousCookbooks, newCookbook]);
+    if (newCookbook) {
+      const newRecipes = newCookbook.recipes.filter(
+        existingRecipes => existingRecipes !== recipe
+      );
+      newCookbook.recipes = [...newRecipes];
+      setCookbooks([...previousCookbooks, newCookbook]);
+    }
   }
 
   return (

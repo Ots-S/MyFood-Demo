@@ -91,7 +91,7 @@ export default function Cookbooks() {
     >
       <Grid container item xs={10} sm={8} md={6} lg={3}>
         <Input
-          label="Entrez le nom de votre livre de recettes"
+          label="Entrez le nom du livre de recettes"
           value={name}
           onChange={onChange}
           onFocus={() => setPostError(false)}
