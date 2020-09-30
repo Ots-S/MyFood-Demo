@@ -1,18 +1,18 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import {
-  Grid,
-  Typography,
   Button,
   Card,
-  CardMedia,
   CardActions,
   CardContent,
+  CardMedia,
+  Grid,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { Context } from "../../Context";
 
 const useStyles = makeStyles({
@@ -34,10 +34,10 @@ const useStyles = makeStyles({
 });
 
 export default function IngredientContainer({ ingredient }) {
-  const classes = useStyles();
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
   const [isButtonHover, setIsButtonHover] = useState(false);
   const { deleteIngredient } = useContext(Context);
+  const classes = useStyles();
 
   function handleOpen() {
     setOpen(prev => !prev);
@@ -80,5 +80,4 @@ export default function IngredientContainer({ ingredient }) {
 
 IngredientContainer.propTypes = {
   ingredient: PropTypes.object.isRequired,
-  deleteIngredient: PropTypes.func.isRequired,
 };

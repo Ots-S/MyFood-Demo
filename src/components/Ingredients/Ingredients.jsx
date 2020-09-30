@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Box, Button, CircularProgress, Grid } from "@material-ui/core";
-import IngredientCard from "./IngredientCard";
 import { makeStyles } from "@material-ui/core/styles";
+import IngredientCard from "./IngredientCard";
 import Input from "../Input";
 import { Context } from "../../Context";
 
@@ -99,7 +99,7 @@ export default function Ingredients() {
         </Button>
       </Box>
       {ingredients.length > 0 ? (
-        <Grid container spacing={1} item xs={11} md={10} lg={6}>
+        <Grid container item spacing={1} xs={11} md={10} lg={6}>
           {ingredients.map(ingredient => (
             <Grid item xs={12} sm={4} key={ingredient.id}>
               <IngredientCard ingredient={ingredient} />

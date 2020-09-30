@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Button,
   Dialog,
@@ -25,10 +25,10 @@ export default function DeleteConfirmationModal({
     <Dialog
       disableScrollLock
       open={open}
-      aria-labelledby="dialog-title"
-      aria-describedby="dialog-description"
+      aria-labelledby="confirmation de suppression"
+      aria-describedby="confirmation de suppression"
     >
-      <DialogTitle id="dialog-title" align="center">
+      <DialogTitle id="confirmation de suppression" align="center">
         {title}
       </DialogTitle>
       <DialogContent>
