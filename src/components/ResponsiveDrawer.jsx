@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    //backgroundColor: "transparent",
   },
   whiteMenuButton: {
     marginRight: theme.spacing(2),

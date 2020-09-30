@@ -1,26 +1,36 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ConfirmationModal from "../ConfirmationModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Button,
-  Typography,
-  Grid,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
   FormControl,
+  Grid,
   InputLabel,
-  Select,
   MenuItem,
+  Select,
+  Typography,
 } from "@material-ui/core";
 import { Context } from "../../Context";
 
 const useStyles = makeStyles({
   root: { width: "100%" },
+  image: {
+    height: "5rem",
+    objectFit: "cover",
+  },
+  gridImages: {
+    height: "5rem",
+    width: "100%",
+  },
 });
 
 export default function CookbookCard({
@@ -36,6 +46,7 @@ export default function CookbookCard({
     openDeleteConfirmationModal,
     setOpenDeleteConfirmationModal,
   ] = useState(false);
+  const [isButtonHover, setIsButtonHover] = useState(false);
   const { addRecipeToCookbook } = useContext(Context);
 
   function openRecipesPopUp() {
@@ -56,22 +67,38 @@ export default function CookbookCard({
   }
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={3}>
       <Grid container item justify="center">
         <CardContent>
           <Typography color="primary" variant="h5" component="h2">
             {cookbook.name}
           </Typography>
         </CardContent>
+        <Grid container justify="center" className={classes.gridImages}>
+          {cookbook.recipes.slice(0, 3).map(recipe => (
+            <Grid item xs={4}>
+              <CardMedia
+                component="img"
+                src={recipe.image}
+                className={classes.image}
+                title={recipe.image}
+              />
+            </Grid>
+          ))}
+        </Grid>
+
         <Grid container justify="center" item xs={12}>
           <FormControl>
-            <InputLabel id="demo-simple-select-label">
+            <InputLabel id="ajouter une recette">
               Ajouter une recette
             </InputLabel>
             <Select
+              MenuProps={{
+                disableScrollLock: true,
+              }}
               style={{ width: "15rem" }}
-              label="Ajouter une recett"
-              id="demo-simple-select"
+              label="Ajouter une recette"
+              id="ajouter une recette"
               value={recipe}
               onChange={handleChange}
             >
@@ -99,8 +126,12 @@ export default function CookbookCard({
           <Button onClick={() => openRecipesPopUp()}>
             <FormatListBulletedIcon />
           </Button>
-          <Button onClick={openDeleteModal}>
-            <DeleteOutlineIcon />
+          <Button
+            onClick={openDeleteModal}
+            onMouseOver={() => setIsButtonHover(true)}
+            onMouseLeave={() => setIsButtonHover(false)}
+          >
+            {isButtonHover ? <DeleteIcon /> : <DeleteOutlineIcon />}
           </Button>
         </CardActions>
       </Grid>

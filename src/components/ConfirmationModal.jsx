@@ -36,7 +36,7 @@ export default function ConfirmationModal({
   }
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} disableScrollLock>
       <DialogTitle id="dialog-title">{title}</DialogTitle>
       <DialogContent>
         {items &&

@@ -27,13 +27,13 @@ export default function Cookbooks() {
     recipes,
     cookbooks,
     createCookbook,
-    idCookbookNumber,
+    cookbookIndex,
     deleteCookbook,
     deleteRecipeFromCookbook,
+    postError,
+    setPostError,
   } = useContext(Context);
   const [name, setName] = useState("");
-  const [getError, setGetError] = useState();
-  const [postError, setPostError] = useState();
   const [deleteError, setDeleteError] = useState();
   const [addError, setAddError] = useState();
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -46,7 +46,7 @@ export default function Cookbooks() {
   }
 
   function saveCookbook() {
-    let newCookbook = { id: idCookbookNumber + 1, name: name, recipes: [] };
+    let newCookbook = { id: cookbookIndex + 1, name: name, recipes: [] };
     createCookbook(newCookbook);
   }
 
@@ -60,17 +60,6 @@ export default function Cookbooks() {
       }
     } catch (error) {
       setAddError(true);
-    }
-  }
-
-  function describeError(error) {
-    switch (error) {
-      case 406:
-        return "Ce nom existe déjà, veuillez en choisir un autre.";
-      case 500:
-        return "Erreur serveur - Impossible d'afficher ou d'envoyer des données, veuillez réessayer plus tard.";
-      default:
-        return "";
     }
   }
 
@@ -96,7 +85,9 @@ export default function Cookbooks() {
           onChange={onChange}
           onFocus={() => setPostError(false)}
           error={postError}
-          helperText={describeError(postError)}
+          helperText={
+            postError && "Ce nom existe déjà, veuillez en choisir un autre."
+          }
         />
       </Grid>
       <Box my={2}>
@@ -106,28 +97,31 @@ export default function Cookbooks() {
       </Box>
       {cookbooks ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {cookbooks.map(cookbook => (
-            <Grid item lg={6} key={cookbook.id}>
-              <CookbookCard
-                cookbook={cookbook}
-                deleteCookbook={deleteCookbook}
-                addRecipeToCookbook={addRecipeToCookbook}
-                recipes={recipes}
-                deleteRecipeFromCookbook={deleteRecipeFromCookbook}
-              />
-            </Grid>
-          ))}
+          {cookbooks
+            .sort(function (a, b) {
+              if (a.id !== b.id) {
+                return b.id - a.id;
+              }
+            })
+            .map(cookbook => (
+              <Grid item lg={6} key={cookbook.id}>
+                <CookbookCard
+                  cookbook={cookbook}
+                  deleteCookbook={deleteCookbook}
+                  addRecipeToCookbook={addRecipeToCookbook}
+                  recipes={recipes}
+                  deleteRecipeFromCookbook={deleteRecipeFromCookbook}
+                />
+              </Grid>
+            ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress />}</Box>
+        <Box mt={25}>
+          <CircularProgress />
+        </Box>
       )}
       <Grid item>
         {deleteError && <Typography align="center">{deleteError}</Typography>}
-      </Grid>
-      <Grid item>
-        {getError && (
-          <Typography align="center">{describeError(getError)}</Typography>
-        )}
       </Grid>
       {confirmationModal && (
         <ConfirmationModal

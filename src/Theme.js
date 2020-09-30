@@ -17,5 +17,10 @@ export default createMuiTheme({
         textPrimary: "white",
       },
     },
+    MuiInputLabel: {
+      root: {
+        fontSize: ".9rem",
+      },
+    },
   },
 });

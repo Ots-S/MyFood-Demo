@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Button,
   Dialog,
   DialogActions,
+  DialogContent,
+  DialogContentText,
   DialogTitle,
   Grid,
 } from "@material-ui/core";
@@ -21,13 +23,19 @@ export default function DeleteConfirmationModal({
 
   return (
     <Dialog
+      disableScrollLock
       open={open}
-      aria-labelledby="dialog-title"
-      aria-describedby="dialog-description"
+      aria-labelledby="confirmation de suppression"
+      aria-describedby="confirmation de suppression"
     >
-      <DialogTitle id="dialog-title" align="center">
+      <DialogTitle id="confirmation de suppression" align="center">
         {title}
       </DialogTitle>
+      <DialogContent>
+        <Grid container justify="center">
+          <DialogContentText>{element.name.toUpperCase()}</DialogContentText>
+        </Grid>
+      </DialogContent>
       <DialogActions>
         <Grid container justify="space-around">
           <Button

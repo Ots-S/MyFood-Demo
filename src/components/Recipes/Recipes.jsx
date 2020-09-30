@@ -26,16 +26,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Recipes() {
+export default function Recipes() {
   const {
     ingredients,
     recipes,
-    getError,
-    idRecipeNumber,
+    recipeIndex,
     createRecipe,
     removeIngredientFromRecipe,
   } = useContext(Context);
-  const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
   const [postError, setPostError] = useState(false);
@@ -43,7 +41,7 @@ function Recipes() {
   const [imageError, setImageError] = useState(false);
   const classes = useStyles();
 
-  function addIngredientToRecipeCreation(ingredient) {
+  function addIngredientToRecipeCreation(event, ingredient) {
     if (!recipeIngredients.includes(ingredient)) {
       setRecipeIngredients(prevState => [...prevState, ingredient]);
     }
@@ -59,7 +57,7 @@ function Recipes() {
   function saveRecipe() {
     if (isValidImageUrl(image)) {
       const recipe = {
-        id: idRecipeNumber + 1,
+        id: recipeIndex + 1,
         name: recipeName,
         ingredients: recipeIngredients,
         image: image,
@@ -100,7 +98,7 @@ function Recipes() {
     >
       <Grid container item xs={10} sm={8} md={6} lg={3}>
         <Input
-          label="Entrez le nom de la recette"
+          label="Entrez le nom d'une recette"
           value={recipeName}
           onChange={event => setRecipeName(event.target.value)}
           onFocus={() => setPostError(false)}
@@ -108,7 +106,7 @@ function Recipes() {
           helperText={describeError(postError)}
         />
         <Input
-          label="Entrez le lien d'une image (.jpg ou .png)"
+          label="Entrez le lien d'une image (jpg ou png)"
           value={image}
           onChange={event => setImage(event.target.value)}
           onFocus={() => setImageError(false)}
@@ -116,39 +114,37 @@ function Recipes() {
           helperText={imageError && "Lien non valide, vérifiez l'extension"}
           className={classes.input}
         />
-      </Grid>
-      <Grid item>
-        <Box my={2}>
-          <Autocomplete
-            disableClearable
-            value={ingredient}
-            onChange={(event, newIngredient) => {
-              addIngredientToRecipeCreation(newIngredient);
-            }}
-            id="Ajouter un ingrédient"
-            options={ingredients}
-            getOptionLabel={ingredient => ingredient.name}
-            style={{ width: "25rem" }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label="Ajouter un ingrédient"
-                variant="outlined"
-                required
-              />
-            )}
-          />
-        </Box>
+        <Grid item xs={12}>
+          <Box my={2}>
+            <Autocomplete
+              fullWidth
+              onChange={addIngredientToRecipeCreation}
+              id="Ajouter un ingrédient"
+              options={ingredients}
+              getOptionLabel={ingredient => ingredient.name}
+              renderInput={params => (
+                <TextField
+                  fullWidth
+                  {...params}
+                  label="Ajouter un ingrédient"
+                  variant="outlined"
+                  required
+                />
+              )}
+            />
+          </Box>
+        </Grid>
       </Grid>
       {recipeIngredients.length > 0 && (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {recipeIngredients.map(ingredient => (
             <Grid item>
               <Button
+                variant="outlined"
                 key={ingredient.id}
                 onClick={() => unselectIngredientFromRecipe(ingredient)}
               >
-                {ingredient.name}
+                <Box mx={2}>{ingredient.name}</Box>
                 <DeleteOutlineIcon fontize="small" />
               </Button>
             </Grid>
@@ -168,31 +164,28 @@ function Recipes() {
       </Box>
       {recipes.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipes.map(recipe => (
-            <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
-              <RecipeCard
-                key={recipe.id}
-                recipe={recipe}
-                removeIngredientFromRecipe={removeIngredientFromRecipe}
-                ingredients={ingredients}
-              />
-            </Grid>
-          ))}
+          {recipes
+            .sort(function (a, b) {
+              if (a.id !== b.id) {
+                return b.id - a.id;
+              }
+            })
+            .map(recipe => (
+              <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
+                <RecipeCard
+                  key={recipe.id}
+                  recipe={recipe}
+                  removeIngredientFromRecipe={removeIngredientFromRecipe}
+                  ingredients={ingredients}
+                />
+              </Grid>
+            ))}
         </Grid>
       ) : (
-        <Box mt={25}>{!getError && <CircularProgress color="primary" />}</Box>
+        <Box mt={25}>
+          <CircularProgress color="primary" />
+        </Box>
       )}
-      <Grid item>
-        {getError && (
-          <Box mx={2}>
-            <Typography align="center">{describeError(getError)}</Typography>
-          </Box>
-        )}
-      </Grid>
     </Grid>
   );
 }
-
-Recipes.propTypes = {};
-
-export default Recipes;
