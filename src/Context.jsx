@@ -1,5 +1,9 @@
 import React, { useState, useEffect, createContext } from "react";
-import { ingredientsList, recipesList } from "./assets/datas.json";
+import {
+  ingredientsList,
+  recipesList,
+  cookbooksList,
+} from "./assets/data.json";
 
 const Context = createContext();
 
@@ -8,42 +12,44 @@ function ContextProvider(props) {
   const [recipes, setRecipes] = useState([]);
   const [cookbooks, setCookbooks] = useState([]);
   const [postError, setPostError] = useState(false);
-  const [ingredientIndex, setIngredientIndex] = useState(12);
-  const [recipeIndex, setRecipeIndex] = useState(2);
-  const [cookookIndex, setCookbookIndex] = useState(0);
+  const [ingredientIndex, setIngredientIndex] = useState(0);
+  const [recipeIndex, setRecipeIndex] = useState(0);
+  const [cookbookIndex, setCookbookIndex] = useState(0);
 
   useEffect(() => {
     setIngredients(ingredientsList);
+    setIngredientIndex(ingredientsList.length);
     setRecipes(recipesList);
+    setRecipeIndex(recipesList.length);
+    setCookbooks(cookbooksList);
+    setCookbookIndex(cookbooksList.length);
   }, []);
 
   function createIngredient(ingredient) {
+    setIngredients([ingredient, ...ingredients]);
+    setIngredientIndex(prevState => prevState + 1);
+  }
+
+  function createRecipe(recipe) {
+    const newRecipes = [recipe, ...recipes];
+    setRecipes(newRecipes);
+    setRecipeIndex(prevState => prevState + 1);
+  }
+
+  function createCookbook(cookbook) {
     let alreadyExist = false;
-    ingredients.forEach(exisitingIngredient => {
-      if (
-        exisitingIngredient.name.toLowerCase() === ingredient.name.toLowerCase()
-      ) {
+    cookbooks.forEach(existingCookbook => {
+      if (existingCookbook.name.toLowerCase() === cookbook.name.toLowerCase()) {
         alreadyExist = true;
       }
     });
     if (alreadyExist) {
       setPostError(true);
     } else {
-      setIngredients([ingredient, ...ingredients]);
-      setIngredientIndex(prevState => prevState + 1);
+      const newCookooks = [cookbook, ...cookbooks];
+      setCookbooks(newCookooks);
+      setCookbookIndex(prevState => prevState + 1);
     }
-  }
-
-  function createRecipe(recipe) {
-    const newRecipes = [...recipes, recipe];
-    setRecipes(newRecipes);
-    setRecipeIndex(prevState => prevState + 1);
-  }
-
-  function createCookbook(cookbook) {
-    const newCookooks = [...cookbooks, cookbook];
-    setCookbooks(newCookooks);
-    setCookbookIndex(prevState => prevState + 1);
   }
 
   function deleteIngredient(ingredient) {
@@ -136,27 +142,39 @@ function ContextProvider(props) {
     }
   }
 
+  function isNameIsPresent(array, key, element) {
+    let isPresent = false;
+    array.map(item => {
+      if (item[key] === element) {
+        isPresent = true;
+        setPostError(true);
+      }
+    });
+    return isPresent;
+  }
+
   return (
     <Context.Provider
       value={{
         ingredients,
         recipes,
         cookbooks,
+        ingredientIndex,
+        recipeIndex,
+        cookbookIndex,
         postError,
         setPostError,
-        ingredientIndex,
         deleteIngredient,
         createIngredient,
         addIngredientToRecipe,
         createRecipe,
-        recipeIndex,
         deleteRecipe,
         createCookbook,
         deleteCookbook,
         addRecipeToCookbook,
-        cookookIndex,
         deleteRecipeFromCookbook,
         removeIngredientFromRecipe,
+        isNameIsPresent,
       }}
     >
       {props.children}

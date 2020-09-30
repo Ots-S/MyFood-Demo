@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
 import { Context } from "../Context";
 
 const useStyles = makeStyles(theme => ({
@@ -22,11 +21,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Profile(props) {
+export default function Profile() {
   const classes = useStyles();
   const { ingredients, recipes, cookbooks } = useContext(Context);
-
-  useEffect(() => {}, []);
 
   return (
     <Grid

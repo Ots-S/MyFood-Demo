@@ -26,15 +26,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Recipes() {
+export default function Recipes() {
   const {
     ingredients,
     recipes,
-    idRecipeNumber,
+    recipeIndex,
     createRecipe,
     removeIngredientFromRecipe,
   } = useContext(Context);
-  const [ingredient, setIngredient] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
   const [postError, setPostError] = useState(false);
@@ -42,7 +41,7 @@ function Recipes() {
   const [imageError, setImageError] = useState(false);
   const classes = useStyles();
 
-  function addIngredientToRecipeCreation(ingredient) {
+  function addIngredientToRecipeCreation(event, ingredient) {
     if (!recipeIngredients.includes(ingredient)) {
       setRecipeIngredients(prevState => [...prevState, ingredient]);
     }
@@ -58,7 +57,7 @@ function Recipes() {
   function saveRecipe() {
     if (isValidImageUrl(image)) {
       const recipe = {
-        id: idRecipeNumber + 1,
+        id: recipeIndex + 1,
         name: recipeName,
         ingredients: recipeIngredients,
         image: image,
@@ -119,11 +118,7 @@ function Recipes() {
           <Box my={2}>
             <Autocomplete
               fullWidth
-              disableClearable
-              value={ingredient}
-              onChange={(event, newIngredient) => {
-                addIngredientToRecipeCreation(newIngredient);
-              }}
+              onChange={addIngredientToRecipeCreation}
               id="Ajouter un ingrédient"
               options={ingredients}
               getOptionLabel={ingredient => ingredient.name}
@@ -145,10 +140,11 @@ function Recipes() {
           {recipeIngredients.map(ingredient => (
             <Grid item>
               <Button
+                variant="outlined"
                 key={ingredient.id}
                 onClick={() => unselectIngredientFromRecipe(ingredient)}
               >
-                {ingredient.name}
+                <Box mx={2}>{ingredient.name}</Box>
                 <DeleteOutlineIcon fontize="small" />
               </Button>
             </Grid>
@@ -171,7 +167,7 @@ function Recipes() {
           {recipes
             .sort(function (a, b) {
               if (a.id !== b.id) {
-                return a.id - b.id;
+                return b.id - a.id;
               }
             })
             .map(recipe => (
@@ -193,7 +189,3 @@ function Recipes() {
     </Grid>
   );
 }
-
-Recipes.propTypes = {};
-
-export default Recipes;

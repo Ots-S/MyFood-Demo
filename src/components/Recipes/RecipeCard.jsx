@@ -64,7 +64,7 @@ export default function RecipeCard({
             component="h2"
             align="center"
           >
-            {recipe.name}
+            {recipe.name}{" "}
           </Typography>
           <CardMedia
             component="img"

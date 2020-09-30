@@ -12,9 +12,6 @@ const useStyles = makeStyles(theme => ({
       marginTop: "6rem",
     },
   },
-  input: {
-    marginTop: "1rem",
-  },
 }));
 
 export default function Ingredients() {
@@ -24,6 +21,7 @@ export default function Ingredients() {
     createIngredient,
     postError,
     setPostError,
+    isNameIsPresent,
   } = useContext(Context);
   const [ingredientName, setIngredientName] = useState("");
   const [image, setImage] = useState("");
@@ -39,17 +37,19 @@ export default function Ingredients() {
   }
 
   function saveIngredient() {
-    if (isValidImageUrl(image)) {
-      const newIngredient = {
-        id: ingredientIndex + 1,
-        name: ingredientName,
-        image: image,
-      };
-      createIngredient(newIngredient);
-      setIngredientName("");
-      setImage("");
-    } else {
-      setImageError(true);
+    if (!isNameIsPresent(ingredients, "name", ingredientName)) {
+      if (isValidImageUrl(image)) {
+        const newIngredient = {
+          id: ingredientIndex + 1,
+          name: ingredientName,
+          image: image,
+        };
+        createIngredient(newIngredient);
+        setIngredientName("");
+        setImage("");
+      } else {
+        setImageError(true);
+      }
     }
   }
 
@@ -75,17 +75,22 @@ export default function Ingredients() {
           onFocus={() => setPostError(false)}
           error={postError}
           helperText={
-            postError && "Ce nom existe déjà, veuillez en choisir un autre."
+            postError
+              ? "Ce nom existe déjà, veuillez en choisir un autre."
+              : " "
           }
         />
         <Input
-          label="Entrez le lien d'une image (jpg ou png)"
+          label="Entrez le lien d'une image"
           value={image}
           onChange={onChangeImage}
           onFocus={() => setImageError(false)}
           error={imageError}
-          helperText={imageError && "Lien non valide, vérifiez l'extension"}
-          className={classes.input}
+          helperText={
+            imageError
+              ? "Lien non valide, vérifiez l'extension"
+              : "Le lien doit se terminer par .jpg ou .png"
+          }
         />
       </Grid>
       <Box my={2}>
