@@ -36,7 +36,6 @@ export default function Recipes() {
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
   const [ingredient, setIngredient] = useState("");
-  const [inputValue, setInputValue] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
   const [ingredientError, setIngredientError] = useState(false);
@@ -46,11 +45,9 @@ export default function Recipes() {
   function addIngredientToRecipeCreation(event, ingredient) {
     if (!recipeIngredients.includes(ingredient)) {
       setRecipeIngredients(prevState => [...prevState, ingredient]);
-      setInputValue("");
       setIngredientError(false);
     } else {
       setIngredientError(true);
-      setInputValue("");
     }
   }
 
@@ -123,12 +120,7 @@ export default function Recipes() {
           <Box my={2}>
             <Autocomplete
               value={ingredient}
-              inputValue={inputValue}
               closeIcon={false}
-              onChange={addIngredientToRecipeCreation}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
               onFocus={() => setIngredientError(false)}
               fullWidth
               id="Ajouter un ingrédient"
@@ -151,14 +143,20 @@ export default function Recipes() {
       </Grid>
       {recipeIngredients.length > 0 && (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipeIngredients.map(ingredient => (
-            <Grid item>
-              <RecipeIngredient
-                ingredient={ingredient}
-                unselectIngredientFromRecipe={unselectIngredientFromRecipe}
-              />
-            </Grid>
-          ))}
+          {recipeIngredients
+            .sort(function (a, b) {
+              if (a.name !== b.name) {
+                return b.name - a.name;
+              }
+            })
+            .map(ingredient => (
+              <Grid item>
+                <RecipeIngredient
+                  ingredient={ingredient}
+                  unselectIngredientFromRecipe={unselectIngredientFromRecipe}
+                />
+              </Grid>
+            ))}
         </Grid>
       )}
       <Box my={2}>
