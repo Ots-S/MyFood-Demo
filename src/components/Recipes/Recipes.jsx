@@ -120,6 +120,7 @@ export default function Recipes() {
           <Box my={2}>
             <Autocomplete
               value={ingredient}
+              onChange={addIngredientToRecipeCreation}
               closeIcon={false}
               onFocus={() => setIngredientError(false)}
               fullWidth
