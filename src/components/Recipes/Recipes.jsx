@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Button,
   CircularProgress,
   Grid,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import RecipeCard from "./RecipeCard";
 import { makeStyles } from "@material-ui/styles";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import RecipeIngredient from "./RecipeIngredient";
 import Input from "../Input";
 import { Context } from "../../Context";
 
@@ -21,9 +20,6 @@ const useStyles = makeStyles(theme => ({
       marginTop: "6rem",
     },
   },
-  input: {
-    marginTop: "1rem",
-  },
 }));
 
 export default function Recipes() {
@@ -33,17 +29,28 @@ export default function Recipes() {
     recipeIndex,
     createRecipe,
     removeIngredientFromRecipe,
+    isNameIsPresent,
+    postError,
+    setPostError,
   } = useContext(Context);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
-  const [postError, setPostError] = useState(false);
+  const [ingredient, setIngredient] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
+  const [ingredientError, setIngredientError] = useState(false);
+
   const classes = useStyles();
 
   function addIngredientToRecipeCreation(event, ingredient) {
     if (!recipeIngredients.includes(ingredient)) {
       setRecipeIngredients(prevState => [...prevState, ingredient]);
+      setInputValue("");
+      setIngredientError(false);
+    } else {
+      setIngredientError(true);
+      setInputValue("");
     }
   }
 
@@ -55,30 +62,21 @@ export default function Recipes() {
   }
 
   function saveRecipe() {
-    if (isValidImageUrl(image)) {
-      const recipe = {
-        id: recipeIndex + 1,
-        name: recipeName,
-        ingredients: recipeIngredients,
-        image: image,
-      };
-      createRecipe(recipe);
-      setRecipeName("");
-      setImage("");
-      setRecipeIngredients("");
-    } else {
-      setImageError(true);
-    }
-  }
-
-  function describeError(error) {
-    switch (error) {
-      case 406:
-        return "Ce nom existe déjà, veuillez en choisir un autre";
-      case 500:
-        return "Erreur serveur - Impossible d'afficher ou d'envoyer des données, veuillez réessayer plus tard.";
-      default:
-        return "";
+    if (!isNameIsPresent(recipes, "name", recipeName)) {
+      if (isValidImageUrl(image)) {
+        const recipe = {
+          id: recipeIndex + 1,
+          name: recipeName,
+          ingredients: recipeIngredients,
+          image: image,
+        };
+        createRecipe(recipe);
+        setRecipeName("");
+        setImage("");
+        setRecipeIngredients("");
+      } else {
+        setImageError(true);
+      }
     }
   }
 
@@ -103,27 +101,43 @@ export default function Recipes() {
           onChange={event => setRecipeName(event.target.value)}
           onFocus={() => setPostError(false)}
           error={postError}
-          helperText={describeError(postError)}
+          helperText={
+            postError
+              ? "Ce nom existe déjà, veuillez en choisir un autre."
+              : " "
+          }
         />
         <Input
-          label="Entrez le lien d'une image (jpg ou png)"
+          label="Entrez le lien d'une image"
           value={image}
           onChange={event => setImage(event.target.value)}
           onFocus={() => setImageError(false)}
           error={imageError}
-          helperText={imageError && "Lien non valide, vérifiez l'extension"}
-          className={classes.input}
+          helperText={
+            imageError
+              ? "Lien non valide, vérifiez l'extension"
+              : "Le lien doit se terminer par .jpg ou .png"
+          }
         />
         <Grid item xs={12}>
           <Box my={2}>
             <Autocomplete
-              fullWidth
+              value={ingredient}
+              inputValue={inputValue}
+              closeIcon={false}
               onChange={addIngredientToRecipeCreation}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              onFocus={() => setIngredientError(false)}
+              fullWidth
               id="Ajouter un ingrédient"
               options={ingredients}
               getOptionLabel={ingredient => ingredient.name}
               renderInput={params => (
                 <TextField
+                  error={ingredientError}
+                  helperText={ingredientError ? "Ingrédient déjà présent" : " "}
                   fullWidth
                   {...params}
                   label="Ajouter un ingrédient"
@@ -139,14 +153,10 @@ export default function Recipes() {
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {recipeIngredients.map(ingredient => (
             <Grid item>
-              <Button
-                variant="outlined"
-                key={ingredient.id}
-                onClick={() => unselectIngredientFromRecipe(ingredient)}
-              >
-                <Box mx={2}>{ingredient.name}</Box>
-                <DeleteOutlineIcon fontize="small" />
-              </Button>
+              <RecipeIngredient
+                ingredient={ingredient}
+                unselectIngredientFromRecipe={unselectIngredientFromRecipe}
+              />
             </Grid>
           ))}
         </Grid>
@@ -171,7 +181,7 @@ export default function Recipes() {
               }
             })
             .map(recipe => (
-              <Grid item lg={6} sm={6} lg={6} key={recipe.id}>
+              <Grid item xs={12} sm={6} lg={6} key={recipe.id}>
                 <RecipeCard
                   key={recipe.id}
                   recipe={recipe}

@@ -19,7 +19,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { Context } from "../../Context";
 
 const useStyles = makeStyles({
-  root: {},
   title: {
     fontSize: 14,
   },
@@ -55,7 +54,7 @@ export default function RecipeCard({
   }
 
   return (
-    <Card className={classes.root} elevation={3}>
+    <Card elevation={3}>
       <Grid container item direction="column" alignItems="center">
         <CardContent>
           <Typography
@@ -64,7 +63,7 @@ export default function RecipeCard({
             component="h2"
             align="center"
           >
-            {recipe.name}{" "}
+            {recipe.name}
           </Typography>
           <CardMedia
             component="img"
@@ -125,5 +124,4 @@ export default function RecipeCard({
 
 RecipeCard.propTypes = {
   recipe: PropTypes.object.isRequired,
-  deleteRecipe: PropTypes.func.isRequired,
 };
