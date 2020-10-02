@@ -43,11 +43,13 @@ export default function Recipes() {
   const classes = useStyles();
 
   function addIngredientToRecipeCreation(event, ingredient) {
-    if (!recipeIngredients.includes(ingredient)) {
-      setRecipeIngredients(prevState => [...prevState, ingredient]);
-      setIngredientError(false);
-    } else {
-      setIngredientError(true);
+    if (ingredient) {
+      if (!recipeIngredients.includes(ingredient)) {
+        setRecipeIngredients(prevState => [...prevState, ingredient]);
+        setIngredientError(false);
+      } else {
+        setIngredientError(true);
+      }
     }
   }
 
@@ -121,12 +123,13 @@ export default function Recipes() {
             <Autocomplete
               value={ingredient}
               onChange={addIngredientToRecipeCreation}
-              closeIcon={false}
               onFocus={() => setIngredientError(false)}
               fullWidth
               id="Ajouter un ingrédient"
               options={ingredients}
-              getOptionLabel={ingredient => ingredient.name}
+              getOptionLabel={ingredient =>
+                typeof ingredient === "string" ? ingredient : ingredient.name
+              }
               renderInput={params => (
                 <TextField
                   error={ingredientError}
@@ -142,7 +145,7 @@ export default function Recipes() {
           </Box>
         </Grid>
       </Grid>
-      {recipeIngredients.length > 0 && (
+      {recipeIngredients && (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
           {recipeIngredients
             .sort(function (a, b) {
@@ -150,10 +153,10 @@ export default function Recipes() {
                 return b.name - a.name;
               }
             })
-            .map(ingredient => (
-              <Grid item>
+            .map(recipeIngredient => (
+              <Grid item key={recipeIngredient.id}>
                 <RecipeIngredient
-                  ingredient={ingredient}
+                  ingredient={recipeIngredient}
                   unselectIngredientFromRecipe={unselectIngredientFromRecipe}
                 />
               </Grid>

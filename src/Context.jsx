@@ -144,7 +144,7 @@ function ContextProvider(props) {
 
   function isNameIsPresent(array, key, element) {
     let isPresent = false;
-    array.map(item => {
+    array.forEach(item => {
       if (item[key].toLowerCase() === element.toLowerCase()) {
         isPresent = true;
         setPostError(true);

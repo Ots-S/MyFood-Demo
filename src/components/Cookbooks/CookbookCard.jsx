@@ -76,7 +76,7 @@ export default function CookbookCard({
         </CardContent>
         <Grid container justify="center" className={classes.gridImages}>
           {cookbook.recipes.slice(0, 3).map(recipe => (
-            <Grid item xs={4}>
+            <Grid item xs={4} key={recipe.id}>
               <CardMedia
                 component="img"
                 src={recipe.image}
