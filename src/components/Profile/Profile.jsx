@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Context } from "../Context";
+import { Context } from "../../Context";
+import Stat from "./Stat";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -18,6 +19,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: "5rem",
     border: "10px solid green",
     borderRadius: "50%",
+  },
+  stats: {
+    width: "18rem",
+    margin: "1rem",
   },
 }));
 
@@ -38,18 +43,19 @@ export default function Profile() {
         src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png"
         alt="avatar"
       />
-      <Typography variant="h6" className={classes.title}>
+      <Typography variant="h6" color="primary" className={classes.title}>
         Sébastien
       </Typography>
-      <Grid container direction="column" alignItems="center">
-        <Grid item>
-          <Typography>Nombre d'ingrédient : {ingredients.length}</Typography>
-          <Typography>Nombre de recettes : {recipes.length}</Typography>
-          <Typography>
-            Nombre de livres de recettes : {cookbooks.length}
-          </Typography>
+      <Card elevation={3}>
+        <Grid container direction="column" alignItems="center">
+          <Stat label="Nombre d'ingrédients :" stat={ingredients.length} />
+          <Stat label="Nombre de recettes :" stat={recipes.length} />
+          <Stat
+            label="Nombre de livres de recettes :"
+            stat={cookbooks.length}
+          />
         </Grid>
-      </Grid>
+      </Card>
     </Grid>
   );
 }

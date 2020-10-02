@@ -79,7 +79,9 @@ export default function Cookbooks() {
           onFocus={() => setPostError(false)}
           error={postError}
           helperText={
-            postError && "Ce nom existe déjà, veuillez en choisir un autre."
+            postError
+              ? "Ce nom existe déjà, veuillez en choisir un autre."
+              : " "
           }
         />
       </Grid>

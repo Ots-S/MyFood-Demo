@@ -37,7 +37,7 @@ export default function Home() {
         className={classes.content}
       >
         <Typography color="primary" variant="h2">
-          MyFood.
+          MyFood
         </Typography>
         <Box m={1}>
           <Typography align="center" color="primary">

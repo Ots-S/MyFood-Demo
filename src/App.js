@@ -5,7 +5,7 @@ import ResponsiveDrawer from "./components/ResponsiveDrawer";
 import Ingredients from "./components/Ingredients/Ingredients";
 import Recipes from "./components/Recipes/Recipes";
 import Cookbooks from "./components/Cookbooks/Cookbooks";
-import Profile from "./components/Profile";
+import Profile from "./components/Profile/Profile";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import theme from "./Theme";
