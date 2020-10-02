@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, CircularProgress, Grid } from "@material-ui/core";
 import CookbookCard from "./CookbookCard";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
@@ -34,7 +28,6 @@ export default function Cookbooks() {
     setPostError,
   } = useContext(Context);
   const [name, setName] = useState("");
-  const [deleteError, setDeleteError] = useState();
   const [addError, setAddError] = useState();
   const [confirmationModal, setConfirmationModal] = useState(false);
   const classes = useStyles();
@@ -120,9 +113,6 @@ export default function Cookbooks() {
           <CircularProgress />
         </Box>
       )}
-      <Grid item>
-        {deleteError && <Typography align="center">{deleteError}</Typography>}
-      </Grid>
       {confirmationModal && (
         <ConfirmationModal
           open={confirmationModal}

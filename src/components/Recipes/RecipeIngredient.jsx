@@ -18,9 +18,9 @@ export default function RecipeIngredient({
     >
       <Box mx={2}>{ingredient.name}</Box>
       {isButtonHover ? (
-        <DeleteIcon fontsize="small" />
+        <DeleteIcon fontSize="small" />
       ) : (
-        <DeleteOutlineIcon fontsize="small" />
+        <DeleteOutlineIcon fontSize="small" />
       )}
     </Button>
   );

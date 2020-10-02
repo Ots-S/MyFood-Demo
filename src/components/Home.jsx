@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import backgroundImage from "../assets/background-image.jpg";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 const useStyles = makeStyles({
   container: {
