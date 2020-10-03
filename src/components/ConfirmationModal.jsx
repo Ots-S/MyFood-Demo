@@ -11,6 +11,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import { Context } from "../Context";
+import PropTypes from "prop-types";
 
 export default function ConfirmationModal({
   recipe,
@@ -94,3 +95,15 @@ export default function ConfirmationModal({
     </Dialog>
   );
 }
+
+ConfirmationModal.propTypes = {
+  recipe: PropTypes.object,
+  cookbook: PropTypes.object,
+  title: PropTypes.string,
+  open: PropTypes.bool.isRequired,
+  items: PropTypes.array,
+  handleOpen: PropTypes.func.isRequired,
+  deleteRecipeFromCookbook: PropTypes.func,
+  removeIngredientFromRecipe: PropTypes.func,
+  adding: PropTypes.func,
+};

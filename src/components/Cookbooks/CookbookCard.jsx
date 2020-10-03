@@ -30,6 +30,7 @@ const useStyles = makeStyles({
   gridImages: {
     height: "5rem",
     width: "100%",
+    margin: "1em 0",
   },
 });
 
@@ -38,6 +39,7 @@ export default function CookbookCard({
   deleteCookbook,
   recipes,
   deleteRecipeFromCookbook,
+  handleOpen,
 }) {
   const classes = useStyles();
   const [recipe, setRecipe] = useState("");
@@ -64,6 +66,7 @@ export default function CookbookCard({
   function addRecipCookbook() {
     addRecipeToCookbook(cookbook, recipe);
     setRecipe("");
+    handleOpen();
   }
 
   return (
@@ -86,7 +89,6 @@ export default function CookbookCard({
             </Grid>
           ))}
         </Grid>
-
         <Grid container justify="center" item xs={12}>
           <FormControl>
             <InputLabel id="ajouter une recette">
@@ -160,8 +162,6 @@ export default function CookbookCard({
 
 CookbookCard.propTypes = {
   cookbook: PropTypes.object.isRequired,
-  deleteCookbook: PropTypes.func.isRequired,
   recipes: PropTypes.array.isRequired,
-  addRecipeToCookbook: PropTypes.func.isRequired,
   deleteRecipeFromCookbook: PropTypes.func.isRequired,
 };

@@ -30,6 +30,7 @@ export default function Cookbooks() {
   const [name, setName] = useState("");
   const [addError, setAddError] = useState();
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [isRecipeAdded, setIsRecipeAdded] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {}, []);
@@ -41,19 +42,6 @@ export default function Cookbooks() {
   function saveCookbook() {
     let newCookbook = { id: cookbookIndex + 1, name: name, recipes: [] };
     createCookbook(newCookbook);
-  }
-
-  async function addRecipeToCookbook(cookbookId, recipeId) {
-    try {
-      const response = await axios.post(
-        "/cookbooks/" + cookbookId + "/recipe/" + recipeId
-      );
-      if (response) {
-        setConfirmationModal(true);
-      }
-    } catch (error) {
-      setAddError(true);
-    }
   }
 
   function handleOpen() {
@@ -103,9 +91,9 @@ export default function Cookbooks() {
                 <CookbookCard
                   cookbook={cookbook}
                   deleteCookbook={deleteCookbook}
-                  addRecipeToCookbook={addRecipeToCookbook}
                   recipes={recipes}
                   deleteRecipeFromCookbook={deleteRecipeFromCookbook}
+                  handleOpen={handleOpen}
                 />
               </Grid>
             ))}
@@ -120,6 +108,13 @@ export default function Cookbooks() {
           open={confirmationModal}
           handleOpen={handleOpen}
           title={"La recette a bien été ajoutée"}
+        />
+      )}
+      {addError && (
+        <ConfirmationModal
+          open={addError}
+          handleOpen={handleOpenError}
+          title={"La recette est déjà présente dans le livre de recette"}
         />
       )}
       {addError && (
