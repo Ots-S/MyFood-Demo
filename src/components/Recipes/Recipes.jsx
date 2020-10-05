@@ -29,9 +29,10 @@ export default function Recipes() {
     recipeIndex,
     createRecipe,
     removeIngredientFromRecipe,
-    isNameIsPresent,
     postError,
     setPostError,
+    isNameIsPresent,
+    isValidImageUrl,
   } = useContext(Context);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
@@ -55,7 +56,7 @@ export default function Recipes() {
 
   function unselectIngredientFromRecipe(ingredient) {
     const newIngredientsList = recipeIngredients.filter(
-      eachIngredient => eachIngredient.id !== ingredient.id
+      existingIngredient => existingIngredient.id !== ingredient.id
     );
     setRecipeIngredients(newIngredientsList);
   }
@@ -76,13 +77,6 @@ export default function Recipes() {
       } else {
         setImageError(true);
       }
-    }
-  }
-
-  function isValidImageUrl(url) {
-    const extension = url.substring(url.length - 4);
-    if (extension === ".jpg" || extension === ".png") {
-      return true;
     }
   }
 
@@ -115,7 +109,7 @@ export default function Recipes() {
           helperText={
             imageError
               ? "Lien non valide, vérifiez l'extension"
-              : "Le lien doit se terminer par .jpg ou .png"
+              : "Le lien doit se terminer par .jpg, .jpeg ou .png"
           }
         />
         <Grid item xs={12}>

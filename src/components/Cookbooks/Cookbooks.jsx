@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Box, Button, CircularProgress, Grid } from "@material-ui/core";
 import CookbookCard from "./CookbookCard";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import ConfirmationModal from "../ConfirmationModal";
 import Input from "../Input";
@@ -30,7 +29,7 @@ export default function Cookbooks() {
   const [name, setName] = useState("");
   const [addError, setAddError] = useState();
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [isRecipeAdded, setIsRecipeAdded] = useState(false);
+
   const classes = useStyles();
 
   useEffect(() => {}, []);

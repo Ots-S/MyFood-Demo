@@ -22,6 +22,7 @@ export default function Ingredients() {
     postError,
     setPostError,
     isNameIsPresent,
+    isValidImageUrl,
   } = useContext(Context);
   const [ingredientName, setIngredientName] = useState("");
   const [image, setImage] = useState("");
@@ -50,13 +51,6 @@ export default function Ingredients() {
       } else {
         setImageError(true);
       }
-    }
-  }
-
-  function isValidImageUrl(url) {
-    const extension = url.substring(url.length - 4);
-    if (extension === ".jpg" || extension === ".png") {
-      return true;
     }
   }
 
@@ -89,7 +83,7 @@ export default function Ingredients() {
           helperText={
             imageError
               ? "Lien non valide, vérifiez l'extension"
-              : "Le lien doit se terminer par .jpg ou .png"
+              : "Le lien doit se terminer par .jpg, .jpeg ou .png"
           }
         />
       </Grid>
@@ -105,11 +99,15 @@ export default function Ingredients() {
       </Box>
       {ingredients.length > 0 ? (
         <Grid container item spacing={1} xs={11} md={10} lg={6}>
-          {ingredients.map(ingredient => (
-            <Grid item xs={12} sm={4} key={ingredient.id}>
-              <IngredientCard ingredient={ingredient} />
-            </Grid>
-          ))}
+          {ingredients
+            .sort(function (a, b) {
+              return a.name - b.name;
+            })
+            .map(ingredient => (
+              <Grid item xs={12} sm={4} key={ingredient.id}>
+                <IngredientCard ingredient={ingredient} />
+              </Grid>
+            ))}
         </Grid>
       ) : (
         <Box mt={25}>

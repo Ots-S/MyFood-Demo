@@ -27,7 +27,7 @@ export default function Input({
 }
 
 Input.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,

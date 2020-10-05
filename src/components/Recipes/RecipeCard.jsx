@@ -99,15 +99,6 @@ export default function RecipeCard({
           recipe={recipe}
         />
       )}
-      {openDeleteModal && (
-        <DeleteConfirmationModal
-          title={"Êtes-vous sûr de vouloir supprimer cette recette ?"}
-          element={recipe}
-          open={openDeleteModal}
-          handleOpen={openDeletePopUp}
-          deleteElement={deleteRecipe}
-        />
-      )}
       {openAddingModal && (
         <ConfirmationModal
           title={"Ajouter un ingrédient"}
@@ -116,6 +107,15 @@ export default function RecipeCard({
           handleOpen={openAddingIngredientModal}
           recipe={recipe}
           adding={true}
+        />
+      )}
+      {openDeleteModal && (
+        <DeleteConfirmationModal
+          title={"Êtes-vous sûr de vouloir supprimer cette recette ?"}
+          element={recipe}
+          open={openDeleteModal}
+          handleOpen={openDeletePopUp}
+          deleteElement={deleteRecipe}
         />
       )}
     </Card>
