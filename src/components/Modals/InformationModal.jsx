@@ -10,19 +10,19 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
-import { Context } from "../Context";
+import { Context } from "../../Context";
 import PropTypes from "prop-types";
 
-export default function ConfirmationModal({
-  recipe,
-  cookbook,
-  title,
-  open,
-  items,
-  handleOpen,
-  deleteRecipeFromCookbook,
-  removeIngredientFromRecipe,
+export default function InformationModal({
   adding,
+  cookbook,
+  deleteRecipeFromCookbook,
+  handleOpen,
+  items,
+  open,
+  recipe,
+  removeIngredientFromRecipe,
+  title,
 }) {
   const { addIngredientToRecipe } = useContext(Context);
 
@@ -96,14 +96,14 @@ export default function ConfirmationModal({
   );
 }
 
-ConfirmationModal.propTypes = {
-  recipe: PropTypes.object,
+InformationModal.propTypes = {
+  adding: PropTypes.bool,
   cookbook: PropTypes.object,
-  title: PropTypes.string,
-  open: PropTypes.bool.isRequired,
-  items: PropTypes.array,
-  handleOpen: PropTypes.func.isRequired,
   deleteRecipeFromCookbook: PropTypes.func,
+  handleOpen: PropTypes.func.isRequired,
+  items: PropTypes.array,
+  open: PropTypes.bool.isRequired,
+  recipe: PropTypes.object,
   removeIngredientFromRecipe: PropTypes.func,
-  adding: PropTypes.func,
+  title: PropTypes.string,
 };

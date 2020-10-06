@@ -23,6 +23,7 @@ export default function Ingredients() {
     setPostError,
     isNameIsPresent,
     isValidImageUrl,
+    sortByName,
   } = useContext(Context);
   const [ingredientName, setIngredientName] = useState("");
   const [image, setImage] = useState("");
@@ -99,15 +100,11 @@ export default function Ingredients() {
       </Box>
       {ingredients.length > 0 ? (
         <Grid container item spacing={1} xs={11} md={10} lg={6}>
-          {ingredients
-            .sort(function (a, b) {
-              return a.name - b.name;
-            })
-            .map(ingredient => (
-              <Grid item xs={12} sm={4} key={ingredient.id}>
-                <IngredientCard ingredient={ingredient} />
-              </Grid>
-            ))}
+          {ingredients.sort(sortByName).map(ingredient => (
+            <Grid item xs={12} sm={4} key={ingredient.id}>
+              <IngredientCard ingredient={ingredient} />
+            </Grid>
+          ))}
         </Grid>
       ) : (
         <Box mt={25}>

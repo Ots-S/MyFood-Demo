@@ -33,6 +33,7 @@ export default function Recipes() {
     setPostError,
     isNameIsPresent,
     isValidImageUrl,
+    sortByName,
   } = useContext(Context);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
@@ -141,20 +142,14 @@ export default function Recipes() {
       </Grid>
       {recipeIngredients && (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipeIngredients
-            .sort(function (a, b) {
-              if (a.name !== b.name) {
-                return b.name - a.name;
-              }
-            })
-            .map(recipeIngredient => (
-              <Grid item key={recipeIngredient.id}>
-                <RecipeIngredient
-                  ingredient={recipeIngredient}
-                  unselectIngredientFromRecipe={unselectIngredientFromRecipe}
-                />
-              </Grid>
-            ))}
+          {recipeIngredients.map(recipeIngredient => (
+            <Grid item key={recipeIngredient.id}>
+              <RecipeIngredient
+                ingredient={recipeIngredient}
+                unselectIngredientFromRecipe={unselectIngredientFromRecipe}
+              />
+            </Grid>
+          ))}
         </Grid>
       )}
       <Box my={2}>
@@ -170,22 +165,16 @@ export default function Recipes() {
       </Box>
       {recipes.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipes
-            .sort(function (a, b) {
-              if (a.id !== b.id) {
-                return b.id - a.id;
-              }
-            })
-            .map(recipe => (
-              <Grid item xs={12} sm={6} lg={6} key={recipe.id}>
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  removeIngredientFromRecipe={removeIngredientFromRecipe}
-                  ingredients={ingredients}
-                />
-              </Grid>
-            ))}
+          {recipes.sort(sortByName).map(recipe => (
+            <Grid item xs={12} sm={6} lg={6} key={recipe.id}>
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                removeIngredientFromRecipe={removeIngredientFromRecipe}
+                ingredients={ingredients}
+              />
+            </Grid>
+          ))}
         </Grid>
       ) : (
         <Box mt={25}>
