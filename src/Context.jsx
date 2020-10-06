@@ -153,28 +153,42 @@ function ContextProvider(props) {
     return isPresent;
   }
 
+  function isValidImageUrl(url) {
+    if (url.endsWith(".jpg") || url.endsWith(".png") || url.endsWith(".jpeg")) {
+      return true;
+    }
+  }
+
+  function sortByName(a, b) {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  }
+
   return (
     <Context.Provider
       value={{
         ingredients,
-        recipes,
-        cookbooks,
+        createIngredient,
+        addIngredientToRecipe,
+        deleteIngredient,
         ingredientIndex,
+        recipes,
+        createRecipe,
+        removeIngredientFromRecipe,
+        deleteRecipe,
         recipeIndex,
+        cookbooks,
+        createCookbook,
+        addRecipeToCookbook,
+        deleteRecipeFromCookbook,
+        deleteCookbook,
         cookbookIndex,
         postError,
         setPostError,
-        deleteIngredient,
-        createIngredient,
-        addIngredientToRecipe,
-        createRecipe,
-        deleteRecipe,
-        createCookbook,
-        deleteCookbook,
-        addRecipeToCookbook,
-        deleteRecipeFromCookbook,
-        removeIngredientFromRecipe,
         isNameIsPresent,
+        isValidImageUrl,
+        sortByName,
       }}
     >
       {props.children}

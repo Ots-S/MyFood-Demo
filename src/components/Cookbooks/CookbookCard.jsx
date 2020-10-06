@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
-import ConfirmationModal from "../ConfirmationModal";
-import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import InformationModal from "../Modals/InformationModal";
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Button,
@@ -138,7 +138,7 @@ export default function CookbookCard({
         </CardActions>
       </Grid>
       {openModal && (
-        <ConfirmationModal
+        <InformationModal
           title={"Liste des recettes"}
           open={openModal}
           cookbook={cookbook}

@@ -12,8 +12,8 @@ import {
 } from "@material-ui/core";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
-import ConfirmationModal from "../ConfirmationModal";
-import DeleteConfirmationModal from "../DeleteConfirmationModal";
+import InformationModal from "../Modals/InformationModal";
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Context } from "../../Context";
@@ -90,13 +90,23 @@ export default function RecipeCard({
         </CardActions>
       </Grid>
       {openModal && (
-        <ConfirmationModal
+        <InformationModal
           title={"Liste des ingrédients"}
           open={openModal}
           items={recipe.ingredients}
           handleOpen={openIngredientsPopUp}
           removeIngredientFromRecipe={removeIngredientFromRecipe}
           recipe={recipe}
+        />
+      )}
+      {openAddingModal && (
+        <InformationModal
+          title={"Ajouter un ingrédient"}
+          open={openAddingModal}
+          items={ingredients}
+          handleOpen={openAddingIngredientModal}
+          recipe={recipe}
+          adding={true}
         />
       )}
       {openDeleteModal && (
@@ -106,16 +116,6 @@ export default function RecipeCard({
           open={openDeleteModal}
           handleOpen={openDeletePopUp}
           deleteElement={deleteRecipe}
-        />
-      )}
-      {openAddingModal && (
-        <ConfirmationModal
-          title={"Ajouter un ingrédient"}
-          open={openAddingModal}
-          items={ingredients}
-          handleOpen={openAddingIngredientModal}
-          recipe={recipe}
-          adding={true}
         />
       )}
     </Card>

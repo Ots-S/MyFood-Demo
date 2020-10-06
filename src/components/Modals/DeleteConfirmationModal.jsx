@@ -8,10 +8,11 @@ import {
   DialogTitle,
   Grid,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 export default function DeleteConfirmationModal({
-  element,
   deleteElement,
+  element,
   handleOpen,
   open,
   title,
@@ -33,7 +34,9 @@ export default function DeleteConfirmationModal({
       </DialogTitle>
       <DialogContent>
         <Grid container justify="center">
-          <DialogContentText>{element.name.toUpperCase()}</DialogContentText>
+          <DialogContentText color="primary">
+            {element.name.toUpperCase()}
+          </DialogContentText>
         </Grid>
       </DialogContent>
       <DialogActions>
@@ -59,3 +62,11 @@ export default function DeleteConfirmationModal({
     </Dialog>
   );
 }
+
+DeleteConfirmationModal.propTypes = {
+  element: PropTypes.object.isRequired,
+  deleteElement: PropTypes.func.isRequired,
+  handleOpen: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+};

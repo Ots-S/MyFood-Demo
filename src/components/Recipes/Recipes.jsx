@@ -29,16 +29,18 @@ export default function Recipes() {
     recipeIndex,
     createRecipe,
     removeIngredientFromRecipe,
-    isNameIsPresent,
     postError,
     setPostError,
+    isNameIsPresent,
+    isValidImageUrl,
+    sortByName,
   } = useContext(Context);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
-  const [ingredient, setIngredient] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
   const [ingredientError, setIngredientError] = useState(false);
+  const ingredient = "";
 
   const classes = useStyles();
 
@@ -55,7 +57,7 @@ export default function Recipes() {
 
   function unselectIngredientFromRecipe(ingredient) {
     const newIngredientsList = recipeIngredients.filter(
-      eachIngredient => eachIngredient.id !== ingredient.id
+      existingIngredient => existingIngredient.id !== ingredient.id
     );
     setRecipeIngredients(newIngredientsList);
   }
@@ -76,13 +78,6 @@ export default function Recipes() {
       } else {
         setImageError(true);
       }
-    }
-  }
-
-  function isValidImageUrl(url) {
-    const extension = url.substring(url.length - 4);
-    if (extension === ".jpg" || extension === ".png") {
-      return true;
     }
   }
 
@@ -115,7 +110,7 @@ export default function Recipes() {
           helperText={
             imageError
               ? "Lien non valide, vérifiez l'extension"
-              : "Le lien doit se terminer par .jpg ou .png"
+              : "Le lien doit se terminer par .jpg, .jpeg ou .png"
           }
         />
         <Grid item xs={12}>
@@ -147,20 +142,14 @@ export default function Recipes() {
       </Grid>
       {recipeIngredients && (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipeIngredients
-            .sort(function (a, b) {
-              if (a.name !== b.name) {
-                return b.name - a.name;
-              }
-            })
-            .map(recipeIngredient => (
-              <Grid item key={recipeIngredient.id}>
-                <RecipeIngredient
-                  ingredient={recipeIngredient}
-                  unselectIngredientFromRecipe={unselectIngredientFromRecipe}
-                />
-              </Grid>
-            ))}
+          {recipeIngredients.map(recipeIngredient => (
+            <Grid item key={recipeIngredient.id}>
+              <RecipeIngredient
+                ingredient={recipeIngredient}
+                unselectIngredientFromRecipe={unselectIngredientFromRecipe}
+              />
+            </Grid>
+          ))}
         </Grid>
       )}
       <Box my={2}>
@@ -176,22 +165,16 @@ export default function Recipes() {
       </Box>
       {recipes.length > 0 ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {recipes
-            .sort(function (a, b) {
-              if (a.id !== b.id) {
-                return b.id - a.id;
-              }
-            })
-            .map(recipe => (
-              <Grid item xs={12} sm={6} lg={6} key={recipe.id}>
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  removeIngredientFromRecipe={removeIngredientFromRecipe}
-                  ingredients={ingredients}
-                />
-              </Grid>
-            ))}
+          {recipes.sort(sortByName).map(recipe => (
+            <Grid item xs={12} sm={6} lg={6} key={recipe.id}>
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                removeIngredientFromRecipe={removeIngredientFromRecipe}
+                ingredients={ingredients}
+              />
+            </Grid>
+          ))}
         </Grid>
       ) : (
         <Box mt={25}>

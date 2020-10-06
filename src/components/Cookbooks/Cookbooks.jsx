@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Box, Button, CircularProgress, Grid } from "@material-ui/core";
 import CookbookCard from "./CookbookCard";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import ConfirmationModal from "../ConfirmationModal";
+import InformationModal from "../Modals/InformationModal";
 import Input from "../Input";
 import { Context } from "../../Context";
 
@@ -26,11 +25,12 @@ export default function Cookbooks() {
     deleteRecipeFromCookbook,
     postError,
     setPostError,
+    sortByName,
   } = useContext(Context);
   const [name, setName] = useState("");
   const [addError, setAddError] = useState();
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [isRecipeAdded, setIsRecipeAdded] = useState(false);
+
   const classes = useStyles();
 
   useEffect(() => {}, []);
@@ -80,45 +80,39 @@ export default function Cookbooks() {
       </Box>
       {cookbooks ? (
         <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {cookbooks
-            .sort(function (a, b) {
-              if (a.id !== b.id) {
-                return b.id - a.id;
-              }
-            })
-            .map(cookbook => (
-              <Grid item lg={6} key={cookbook.id}>
-                <CookbookCard
-                  cookbook={cookbook}
-                  deleteCookbook={deleteCookbook}
-                  recipes={recipes}
-                  deleteRecipeFromCookbook={deleteRecipeFromCookbook}
-                  handleOpen={handleOpen}
-                />
-              </Grid>
-            ))}
+          {cookbooks.sort(sortByName).map(cookbook => (
+            <Grid item lg={6} key={cookbook.id}>
+              <CookbookCard
+                cookbook={cookbook}
+                deleteCookbook={deleteCookbook}
+                recipes={recipes}
+                deleteRecipeFromCookbook={deleteRecipeFromCookbook}
+                handleOpen={handleOpen}
+              />
+            </Grid>
+          ))}
         </Grid>
       ) : (
         <Box mt={25}>
           <CircularProgress />
         </Box>
       )}
-      {confirmationModal && (
-        <ConfirmationModal
+      {InformationModal && (
+        <InformationModal
           open={confirmationModal}
           handleOpen={handleOpen}
           title={"La recette a bien été ajoutée"}
         />
       )}
       {addError && (
-        <ConfirmationModal
+        <InformationModal
           open={addError}
           handleOpen={handleOpenError}
           title={"La recette est déjà présente dans le livre de recette"}
         />
       )}
       {addError && (
-        <ConfirmationModal
+        <InformationModal
           open={addError}
           handleOpen={handleOpenError}
           title={"La recette est déjà présente dans le livre de recette"}

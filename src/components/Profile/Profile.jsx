@@ -10,13 +10,14 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       marginTop: "6rem",
     },
+    height: "80vh",
   },
   title: {
-    marginBottom: "5rem",
+    marginBottom: "1rem",
   },
   avatar: {
-    marginBottom: "5rem",
-    marginTop: "5rem",
+    marginBottom: "1rem",
+    marginTop: "1rem",
     border: "10px solid green",
     borderRadius: "50%",
   },
@@ -34,7 +35,7 @@ export default function Profile() {
     <Grid
       container
       direction="column"
-      justify="center"
+      justify="space-around"
       alignItems="center"
       className={classes.container}
     >
