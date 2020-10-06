@@ -37,10 +37,10 @@ export default function Recipes() {
   } = useContext(Context);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeName, setRecipeName] = useState("");
-  const [ingredient, setIngredient] = useState("");
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(false);
   const [ingredientError, setIngredientError] = useState(false);
+  const ingredient = "";
 
   const classes = useStyles();
 
