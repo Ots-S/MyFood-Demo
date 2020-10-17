@@ -7,6 +7,10 @@ export default createMuiTheme({
       main: green[800],
       contrastText: "white",
     },
+    secondary: {
+      main: "#ffffff",
+      contrastText: "white",
+    },
   },
   overrides: {
     MuiButton: {
