@@ -111,7 +111,11 @@ export default function ResponsiveDrawer() {
       <List className={classes.list}>
         {itemsList.map(item => (
           <Box key={item.id} my={1}>
-            <ListItem button onClick={() => goToLink(item)}>
+            <ListItem
+              button
+              onClick={() => goToLink(item)}
+              className={classes.navButton}
+            >
               <ListItemIcon
                 className={
                   itemSelected === item.name ? classes.selectedIcon : ""
@@ -120,7 +124,10 @@ export default function ResponsiveDrawer() {
                 {item.icon}
               </ListItemIcon>
               <ListItemText disableTypography>
-                <Typography variant="body1">
+                <Typography
+                  color={itemSelected === item.name ? "primary" : ""}
+                  variant="body1"
+                >
                   {item.name.toUpperCase()}
                 </Typography>
               </ListItemText>
