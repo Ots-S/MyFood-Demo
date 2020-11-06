@@ -125,7 +125,7 @@ export default function ResponsiveDrawer() {
               </ListItemIcon>
               <ListItemText disableTypography>
                 <Typography
-                  color={itemSelected === item.name ? "primary" : ""}
+                  color={itemSelected === item.name ? "primary" : "initial"}
                   variant="body1"
                 >
                   {item.name.toUpperCase()}
