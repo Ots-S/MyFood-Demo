@@ -5,7 +5,7 @@ import IngredientCard from "./IngredientCard";
 import Input from "../Input";
 import { Context } from "../../Context";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: "5rem",
     [theme.breakpoints.up("sm")]: {
@@ -56,61 +56,61 @@ export default function Ingredients() {
   }
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      className={classes.container}
-    >
-      <Grid container item direction="column" xs={10} sm={8} md={6} lg={3}>
-        <Input
-          label="Entrez le nom d'un ingrédient"
-          value={ingredientName}
-          onChange={onChangeInput}
-          onFocus={() => setPostError(false)}
-          error={postError}
-          helperText={
-            postError
-              ? "Ce nom existe déjà, veuillez en choisir un autre."
-              : " "
-          }
-        />
-        <Input
-          label="Entrez le lien d'une image"
-          value={image}
-          onChange={onChangeImage}
-          onFocus={() => setImageError(false)}
-          error={imageError}
-          helperText={
-            imageError
-              ? "Lien non valide, vérifiez l'extension"
-              : "Le lien doit se terminer par .jpg, .jpeg ou .png"
-          }
-        />
-      </Grid>
-      <Box my={2}>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => saveIngredient()}
-          disabled={!image || !ingredientName}
-        >
-          Ajouter
-        </Button>
-      </Box>
-      {ingredients.length > 0 ? (
-        <Grid container item spacing={1} xs={11} md={10} lg={6}>
-          {ingredients.sort(sortByName).map(ingredient => (
-            <Grid item xs={12} sm={4} key={ingredient.id}>
-              <IngredientCard ingredient={ingredient} />
-            </Grid>
-          ))}
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        className={classes.container}
+      >
+        <Grid container item direction="column" xs={10} sm={8} md={6} lg={3}>
+          <Input
+            label="Entrez le nom d'un ingrédient"
+            value={ingredientName}
+            onChange={onChangeInput}
+            onFocus={() => setPostError(false)}
+            error={postError}
+            helperText={
+              postError
+                ? "Ce nom existe déjà, veuillez en choisir un autre."
+                : " "
+            }
+          />
+          <Input
+            label="Entrez le lien d'une image"
+            value={image}
+            onChange={onChangeImage}
+            onFocus={() => setImageError(false)}
+            error={imageError}
+            helperText={
+              imageError
+                ? "Lien non valide, vérifiez l'extension"
+                : "Le lien doit se terminer par .jpg, .jpeg ou .png"
+            }
+          />
         </Grid>
-      ) : (
-        <Box mt={25}>
-          <CircularProgress color="primary" />
+        <Box my={2}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => saveIngredient()}
+            disabled={!image || !ingredientName}
+          >
+            Ajouter
+          </Button>
         </Box>
-      )}
-    </Grid>
+        {ingredients.length > 0 ? (
+          <Grid container item spacing={1} xs={11} md={10} lg={6}>
+            {ingredients.sort(sortByName).map((ingredient) => (
+              <Grid item xs={12} sm={4} key={ingredient.id}>
+                <IngredientCard ingredient={ingredient} />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Box mt={25}>
+            <CircularProgress color="primary" />
+          </Box>
+        )}
+      </Grid>
   );
 }

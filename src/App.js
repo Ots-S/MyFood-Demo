@@ -12,9 +12,6 @@ import theme from "./Theme";
 import { ContextProvider } from "./Context";
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    display: "flex",
-  },
 }));
 
 export default function App() {

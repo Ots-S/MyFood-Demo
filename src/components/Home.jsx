@@ -21,14 +21,14 @@ export default function Home() {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       className={classes.container}
     >
       <Grid
         container
         item
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         xs={8}
         sm={6}

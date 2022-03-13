@@ -45,7 +45,7 @@ export default function IngredientContainer({ ingredient }) {
 
   return (
     <Card className={classes.ingredientContainer} elevation={3}>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <CardContent className={classes.cardContent}>
           <Typography color="primary" align="center" className={classes.title}>
             {ingredient.name.toUpperCase()}

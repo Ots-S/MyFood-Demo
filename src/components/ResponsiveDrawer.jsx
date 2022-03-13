@@ -73,7 +73,7 @@ export default function ResponsiveDrawer() {
   let history = useHistory();
 
   const itemsList = [
-    { id: 1, name: "Accueil", path: "/", icon: <HomeIcon /> },
+    { id: 1, name:"Accueil", path: "/", icon: <HomeIcon /> },
     { id: 2, name: "Ingrédients", path: "/ingredients", icon: <AppleIcon /> },
     { id: 3, name: "Recettes", path: "/recipes", icon: <ListAltIcon /> },
     {
