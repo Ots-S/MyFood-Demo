@@ -45,7 +45,7 @@ export default function InformationModal({
             <Grid
               key={item.id}
               container
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
             >
               <Grid item>
@@ -81,7 +81,7 @@ export default function InformationModal({
           ))}
       </DialogContent>
       <DialogActions>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Button
             variant="outlined"
             color="primary"

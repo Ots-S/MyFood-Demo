@@ -6,7 +6,7 @@ import InformationModal from "../Modals/InformationModal";
 import Input from "../Input";
 import { Context } from "../../Context";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: "5rem",
     [theme.breakpoints.up("sm")]: {
@@ -45,79 +45,87 @@ export default function Cookbooks() {
   }
 
   function handleOpen() {
-    setConfirmationModal(prevState => !prevState);
+    setConfirmationModal((prevState) => !prevState);
   }
 
   function handleOpenError() {
-    setAddError(prevState => !prevState);
+    setAddError((prevState) => !prevState);
   }
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      className={classes.container}
-    >
-      <Grid container item xs={10} sm={8} md={6} lg={3}>
-        <Input
-          label="Entrez le nom du livre de recettes"
-          value={name}
-          onChange={onChange}
-          onFocus={() => setPostError(false)}
-          error={postError}
-          helperText={
-            postError
-              ? "Ce nom existe déjà, veuillez en choisir un autre."
-              : " "
-          }
-        />
-      </Grid>
-      <Box my={2}>
-        <Button onClick={saveCookbook} variant="contained" color="primary">
-          Créer
-        </Button>
-      </Box>
-      {cookbooks ? (
-        <Grid container spacing={1} item xs={11} md={10} lg={6}>
-          {cookbooks.sort(sortByName).map(cookbook => (
-            <Grid item lg={6} key={cookbook.id}>
-              <CookbookCard
-                cookbook={cookbook}
-                deleteCookbook={deleteCookbook}
-                recipes={recipes}
-                deleteRecipeFromCookbook={deleteRecipeFromCookbook}
-                handleOpen={handleOpen}
-              />
-            </Grid>
-          ))}
+    <div>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        className={classes.container}
+      >
+        <Grid container item xs={10} sm={8} md={6} lg={3}>
+          <Input
+            label="Entrez le nom du livre de recettes"
+            required
+            value={name}
+            onChange={onChange}
+            onFocus={() => setPostError(false)}
+            error={postError}
+            helperText={
+              postError
+                ? "Ce nom existe déjà, veuillez en choisir un autre."
+                : " "
+            }
+          />
         </Grid>
-      ) : (
-        <Box mt={25}>
-          <CircularProgress />
+        <Box my={2}>
+          <Button
+            onClick={saveCookbook}
+            variant="contained"
+            color="primary"
+            disabled={!name}
+          >
+            Créer
+          </Button>
         </Box>
-      )}
-      {InformationModal && (
-        <InformationModal
-          open={confirmationModal}
-          handleOpen={handleOpen}
-          title={"La recette a bien été ajoutée"}
-        />
-      )}
-      {addError && (
-        <InformationModal
-          open={addError}
-          handleOpen={handleOpenError}
-          title={"La recette est déjà présente dans le livre de recette"}
-        />
-      )}
-      {addError && (
-        <InformationModal
-          open={addError}
-          handleOpen={handleOpenError}
-          title={"La recette est déjà présente dans le livre de recette"}
-        />
-      )}
-    </Grid>
+        {cookbooks ? (
+          <Grid container spacing={1} item xs={11} md={10} lg={6}>
+            {cookbooks.sort(sortByName).map((cookbook) => (
+              <Grid item lg={6} key={cookbook.id}>
+                <CookbookCard
+                  cookbook={cookbook}
+                  deleteCookbook={deleteCookbook}
+                  recipes={recipes}
+                  deleteRecipeFromCookbook={deleteRecipeFromCookbook}
+                  handleOpen={handleOpen}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Box mt={25}>
+            <CircularProgress />
+          </Box>
+        )}
+        {InformationModal && (
+          <InformationModal
+            open={confirmationModal}
+            handleOpen={handleOpen}
+            title={"La recette a bien été ajoutée"}
+          />
+        )}
+        {addError && (
+          <InformationModal
+            open={addError}
+            handleOpen={handleOpenError}
+            title={"La recette est déjà présente dans le livre de recette"}
+          />
+        )}
+        {addError && (
+          <InformationModal
+            open={addError}
+            handleOpen={handleOpenError}
+            title={"La recette est déjà présente dans le livre de recette"}
+          />
+        )}
+      </Grid>
+    </div>
   );
 }
