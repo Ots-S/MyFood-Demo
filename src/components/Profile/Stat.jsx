@@ -14,7 +14,7 @@ export default function Stat({ label, stat }) {
   const classes = useStyles();
 
   return (
-    <Grid container justifyContent="space-between" item className={classes.stats}>
+    <Grid container justify="space-between" item className={classes.stats}>
       <Typography>{label}</Typography>
       <Typography color="primary">{stat}</Typography>
     </Grid>
