@@ -35,7 +35,7 @@ export default function Profile() {
     <Grid
       container
       direction="column"
-      justify="space-around"
+      justifyContent="space-around"
       alignItems="center"
       className={classes.container}
     >
