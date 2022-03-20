@@ -71,13 +71,13 @@ export default function CookbookCard({
 
   return (
     <Card className={classes.root} elevation={3}>
-      <Grid container item justifyContent="center">
+      <Grid container item justify="center">
         <CardContent>
           <Typography color="primary" variant="h5" component="h2">
             {cookbook.name}
           </Typography>
         </CardContent>
-        <Grid container justifyContent="center" className={classes.gridImages}>
+        <Grid container justify="center" className={classes.gridImages}>
           {cookbook.recipes.slice(0, 3).map(recipe => (
             <Grid item xs={4} key={recipe.id}>
               <CardMedia
@@ -89,7 +89,7 @@ export default function CookbookCard({
             </Grid>
           ))}
         </Grid>
-        <Grid container justifyContent="center" item xs={12}>
+        <Grid container justify="center" item xs={12}>
           <FormControl>
             <InputLabel id="ajouter une recette">
               Ajouter une recette
