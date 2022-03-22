@@ -33,14 +33,14 @@ export default function DeleteConfirmationModal({
         {title}
       </DialogTitle>
       <DialogContent>
-        <Grid container justifyContent="center">
+        <Grid container justify="center">
           <DialogContentText color="primary">
             {element.name.toUpperCase()}
           </DialogContentText>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container justifyContent="space-around">
+        <Grid container justify="space-around">
           <Button
             color="primary"
             variant="contained"
